@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 function FadeUp({
@@ -42,29 +42,54 @@ export default function About() {
           style={{
             display: "grid",
             gridTemplateColumns: "1fr",
-            gap: "3rem",
+            gap: "3.5rem",
             alignItems: "start",
           }}
           className="about-grid"
         >
-          {/* Headline */}
-          <FadeUp delay={0.05}>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2rem, 4vw, 3rem)",
-                fontWeight: 700,
-                lineHeight: 1.05,
-                color: "var(--ink)",
-                maxWidth: "560px",
-              }}
-            >
-              Psychology taught me to ask the right questions.
-              Data science helps me answer them.
-            </h2>
-          </FadeUp>
+          {/* Left: photo + headline */}
+          <div>
+            <FadeUp delay={0.05}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  maxWidth: "360px",
+                  aspectRatio: "1 / 1",
+                  border: "1px solid var(--accent)",
+                  marginBottom: "2rem",
+                  overflow: "hidden",
+                }}
+              >
+                <Image
+                  src="/headshot.jpg"
+                  alt="Mika Ismayilli"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                  sizes="(max-width: 900px) 80vw, 360px"
+                  priority
+                />
+              </div>
+            </FadeUp>
 
-          {/* Body copy */}
+            <FadeUp delay={0.08}>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  color: "var(--ink)",
+                  maxWidth: "380px",
+                }}
+              >
+                Psychology taught me to ask the right questions.
+                Data science helps me answer them.
+              </h2>
+            </FadeUp>
+          </div>
+
+          {/* Right: body copy */}
           <div>
             <FadeUp delay={0.1}>
               <p
@@ -74,7 +99,6 @@ export default function About() {
                   color: "var(--ink)",
                   lineHeight: 1.7,
                   marginBottom: "1.25rem",
-                  maxWidth: "640px",
                 }}
               >
                 I started in psychology — four years at Suffolk University
@@ -94,7 +118,6 @@ export default function About() {
                   color: "var(--ink)",
                   lineHeight: 1.7,
                   marginBottom: "1.25rem",
-                  maxWidth: "640px",
                 }}
               >
                 My work sits at the intersection of behavioral science and data
@@ -113,7 +136,6 @@ export default function About() {
                   fontSize: "1.0625rem",
                   color: "var(--ink)",
                   lineHeight: 1.7,
-                  maxWidth: "640px",
                 }}
               >
                 I&apos;m looking for data science, ML, and analytics roles where
@@ -131,15 +153,13 @@ export default function About() {
                   flexWrap: "wrap",
                 }}
               >
-                {[
-                  "Boston, MA",
-                  "Open to remote",
-                  "EN · RU · AZ · TR · ES",
-                ].map((tag) => (
-                  <span key={tag} className="tech-pill">
-                    {tag}
-                  </span>
-                ))}
+                {["Boston, MA", "Open to remote", "EN · RU · AZ · TR · ES"].map(
+                  (tag) => (
+                    <span key={tag} className="tech-pill">
+                      {tag}
+                    </span>
+                  )
+                )}
               </div>
             </FadeUp>
           </div>
@@ -149,7 +169,7 @@ export default function About() {
       <style>{`
         @media (min-width: 900px) {
           .about-grid {
-            grid-template-columns: 5fr 7fr !important;
+            grid-template-columns: 4fr 6fr !important;
           }
         }
       `}</style>
