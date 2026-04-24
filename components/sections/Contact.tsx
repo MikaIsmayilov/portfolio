@@ -78,7 +78,7 @@ export default function Contact() {
             className="section-num"
             style={{ display: "block", marginBottom: "1rem" }}
           >
-            05 / Contact
+            06 / Contact
           </span>
         </FadeUp>
 

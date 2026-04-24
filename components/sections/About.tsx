@@ -34,7 +34,7 @@ export default function About() {
       <div className="section-wrap">
         <FadeUp>
           <span className="section-num" style={{ display: "block", marginBottom: "1rem" }}>
-            02 / About
+            01 / About
           </span>
         </FadeUp>
 

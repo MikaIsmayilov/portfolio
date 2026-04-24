@@ -74,7 +74,7 @@ export default function ResumeBlock() {
             className="section-num"
             style={{ display: "block", marginBottom: "1rem" }}
           >
-            04 / Résumé
+            05 / Résumé
           </span>
         </FadeUp>
 
