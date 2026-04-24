@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mikaismayilli.com/sitemap.xml
