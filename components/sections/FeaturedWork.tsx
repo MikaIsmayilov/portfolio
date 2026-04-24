@@ -71,7 +71,7 @@ export default function FeaturedWork() {
             className="section-num"
             style={{ display: "block", marginBottom: "1rem" }}
           >
-            01 / Work
+            02 / Work
           </span>
         </FadeUp>
 

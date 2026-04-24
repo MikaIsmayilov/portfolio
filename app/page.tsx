@@ -15,8 +15,8 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <FeaturedWork />
         <About />
+        <FeaturedWork />
         <MoreProjects />
         <ResumeBlock />
         <Contact />
