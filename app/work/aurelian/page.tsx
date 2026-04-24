@@ -18,9 +18,10 @@ export default function Aurelian() {
       badge="In progress"
       stats={[
         { value: "Personal", label: "Project type" },
-        { value: "TBD", label: "Launch" },
+        { value: "Live", label: "Status" },
       ]}
-      tech={["LLM", "TBD"]}
+      tech={["LLM", "Lovable", "Web App"]}
+      demo="https://aurelianfits.lovable.app"
     >
       <Section title="Why I'm building this">
         <BodyText>
@@ -42,14 +43,29 @@ export default function Aurelian() {
 
       <Section title="Current status">
         <BodyText>
-          The prototype is in active development. Technical details — LLM choice,
-          vision model, frontend stack, backend architecture, and hosting — will
-          be published here once the stack is locked and tested.
+          A working prototype is live at{" "}
+          <a
+            href="https://aurelianfits.lovable.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--accent)", textDecoration: "underline" }}
+          >
+            aurelianfits.lovable.app
+          </a>
+          , built with Lovable to validate the core concept quickly. It&apos;s a
+          prototype — intentionally rough, built to test whether the idea holds
+          up before committing to a full stack.
+        </BodyText>
+        <BodyText>
+          The full version is currently being rebuilt from scratch with a proper
+          architecture: custom backend, a vision model for wardrobe scanning, and
+          a more capable LLM layer for outfit reasoning. Technical details will be
+          published here once the stack is locked.
         </BodyText>
         <BodyText>
           I&apos;m being deliberate about not shipping something underbaked.
-          When it&apos;s ready, this page will have a live demo, a write-up of
-          the architecture decisions, and an honest account of what worked and
+          When it&apos;s ready, this page will have a full write-up of the
+          architecture decisions and an honest account of what worked and
           what didn&apos;t.
         </BodyText>
       </Section>
