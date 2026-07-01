@@ -20,15 +20,13 @@ export default function Aurelian() {
         { value: "Personal", label: "Project type" },
         { value: "Live", label: "Status" },
       ]}
-      tech={["LLM", "Lovable", "Web App"]}
+      tech={["LLM", "Web App"]}
       demo="https://aurelianfits.lovable.app"
     >
       <Section title="Why I'm building this">
         <BodyText>
-          Everything else in this portfolio is coursework or a finished exercise.
-          Aurelian is <em>mine</em> — no professor assigned it, no grade
-          attached. That distinction matters. It&apos;s the project I work on
-          when I&apos;m supposed to be doing something else.
+          Aurelian is the project I work on when I&apos;m supposed to be doing
+          something else.
         </BodyText>
         <BodyText>
           The idea came from a recurring frustration: personal style advice is
@@ -52,7 +50,7 @@ export default function Aurelian() {
           >
             aurelianfits.lovable.app
           </a>
-          , built with Lovable to validate the core concept quickly. It&apos;s a
+          , built to validate the core concept quickly. It&apos;s a
           prototype — intentionally rough, built to test whether the idea holds
           up before committing to a full stack.
         </BodyText>

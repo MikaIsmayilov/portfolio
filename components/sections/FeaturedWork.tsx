@@ -30,8 +30,8 @@ const tier1: Project[] = [
     slug: "aurelian",
     title: "Aurelian",
     oneliner:
-      "An AI-powered personal styling assistant I'm building in my spare time — no professor assigned it, no grade attached.",
-    tech: ["LLM", "Lovable", "Web App"],
+      "An AI-powered personal styling assistant I'm building in my spare time.",
+    tech: ["LLM", "Web App"],
     role: "Solo project · personal initiative",
     badge: "In progress",
     miniViz: "shimmer",
