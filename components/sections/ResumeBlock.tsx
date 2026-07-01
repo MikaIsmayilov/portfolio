@@ -41,6 +41,17 @@ const education = [
 
 const experience = [
   {
+    title: "Data Analysis Intern",
+    org: "Outfox Energy (Redfish Systems)",
+    location: "Leicester, UK (Remote)",
+    period: "Jun 2026 – Jul 2026",
+    bullets: [
+      "Automated recurring reporting for commercial and operations teams by building refreshable Power BI dashboards with DAX measures and Power Query transformations, replacing manual spreadsheet reporting.",
+      "Supported credit-balance and arrears monitoring in line with Ofgem expectations, analyzing direct-debit levels against actual consumption to flag over- and under-set customer accounts.",
+      "Queried the group's SQL Server reporting database and cleaned, validated, and explored large operational datasets in Python (pandas) to surface consumption and payment anomalies.",
+    ],
+  },
+  {
     title: "Sales Management Intern",
     org: "NEP Engineering",
     location: "Baku, Azerbaijan",
@@ -84,7 +95,7 @@ const experience = [
 ];
 
 const skills = {
-  "Languages & Tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "Streamlit"],
+  "Languages & Tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "Streamlit", "Adobe Creative Cloud", "Premiere Pro", "Photoshop", "MS Office"],
   "Python Libraries": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "SHAP", "NetworkX", "Matplotlib", "Seaborn", "Hugging Face"],
   "Spoken Languages": ["English (native)", "Russian (native)", "Azerbaijani (proficient)", "Turkish (proficient)", "Spanish (intermediate)"],
 };
