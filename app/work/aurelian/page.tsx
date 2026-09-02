@@ -46,7 +46,7 @@ export default function Aurelian() {
             href="https://aurelianfits.lovable.app"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--accent)", textDecoration: "underline" }}
+            style={{ color: "var(--ember)", textDecoration: "underline", textUnderlineOffset: "3px" }}
           >
             aurelianfits.lovable.app
           </a>

@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import Reveal from "@/components/Reveal";
 import ExpandableCard from "@/components/ExpandableCard";
 import type { ExpandableProject } from "@/components/ExpandableCard";
 
@@ -9,6 +8,7 @@ const tier2: ExpandableProject[] = [
   {
     slug: "f1-analysis",
     title: "F1 Performance Analysis",
+    course: "BU · BA775 · Analytics for Business",
     oneliner:
       "Three decades of Formula 1 data analyzed for driver performance, constructor dominance, lap-time variability, and circuit effects — with interactive Tableau dashboards.",
     tech: ["Python", "SQL", "Tableau Public"],
@@ -34,6 +34,7 @@ const tier2: ExpandableProject[] = [
   {
     slug: "airbnb-boston",
     title: "Airbnb Boston Price & Booking",
+    course: "BU · BA810 · Supervised Machine Learning",
     oneliner:
       "End-to-end supervised ML pipeline on 3,500+ Boston listings: a regression model for nightly price and a classification model for 30-day booking likelihood.",
     tech: ["scikit-learn", "Python", "pandas"],
@@ -57,6 +58,7 @@ const tier2: ExpandableProject[] = [
   {
     slug: "alone-tv",
     title: "Alone TV — Survival Patterns",
+    course: "BU · BA820 · Unsupervised & Unstructured ML",
     oneliner:
       "Unsupervised learning on History Channel's Alone contestants — K-Means, PCA, and hierarchical clustering to segment by behavioral and demographic traits linked to survival outcomes.",
     tech: ["scikit-learn", "Python", "Jupyter"],
@@ -80,6 +82,7 @@ const tier2: ExpandableProject[] = [
   {
     slug: "semiconductor-trade",
     title: "Semiconductor Trade Resilience",
+    course: "BU · BA780 · Introduction to Business Analytics",
     oneliner:
       "Multi-source analysis of global semiconductor trade (UN COMTRADE + wafer fault rates + SOXX index) mapping supply-chain dependencies and fragile nodes.",
     tech: ["Python", "NetworkX", "GeoPandas"],
@@ -102,78 +105,49 @@ const tier2: ExpandableProject[] = [
   },
 ];
 
-function FadeUp({
-  children,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 export default function MoreProjects() {
   return (
-    <section
-      id="more-projects"
-      style={{ paddingBlock: "6rem", borderBottom: "1px solid var(--rule)" }}
-    >
-      <div className="section-wrap">
-        <FadeUp>
-          <span
-            className="section-num"
-            style={{ display: "block", marginBottom: "1rem" }}
-          >
-            04 / Coursework
-          </span>
-        </FadeUp>
+    <section id="more-projects" className="section">
+      <div className="wrap">
+        <Reveal>
+          <div className="section-head">
+            <div>
+              <p className="eyebrow" style={{ marginBottom: "1rem" }}>
+                Coursework
+              </p>
+              <h2
+                className="display"
+                style={{
+                  fontSize: "clamp(2rem, 4.5vw, 3.25rem)",
+                  fontWeight: 700,
+                  lineHeight: 1.0,
+                }}
+              >
+                More projects
+              </h2>
+            </div>
+            <p className="prose" style={{ color: "var(--paper-dim)", maxWidth: "380px", fontSize: "1rem" }}>
+              Real work with real results from my MSBA and BS programs. Open any
+              card for the visuals and my part in it.
+            </p>
+          </div>
+        </Reveal>
 
-        <FadeUp delay={0.05}>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: "var(--ink)",
-              marginBottom: "0.75rem",
-            }}
-          >
-            More projects
-          </h2>
-        </FadeUp>
-        <FadeUp delay={0.08}>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.9375rem",
-              color: "var(--ink-muted)",
-              marginBottom: "3rem",
-              maxWidth: "520px",
-            }}
-          >
-            Real work with real results — coursework projects from my MSBA and
-            BS programs. Click any card to expand.
-          </p>
-        </FadeUp>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          {tier2.map((p) => (
-            <ExpandableCard key={p.slug} project={p} />
+        <div
+          className="tier2-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}
+        >
+          {tier2.map((p, i) => (
+            <ExpandableCard key={p.slug} project={p} index={i} />
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 760px) {
+          .tier2-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

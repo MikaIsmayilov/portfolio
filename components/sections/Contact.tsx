@@ -1,58 +1,22 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-
-function FadeUp({
-  children,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import { useState } from "react";
+import Reveal from "@/components/Reveal";
 
 const contactLinks = [
-  {
-    label: "Email",
-    value: "mikaism@bu.edu",
-    href: "mailto:mikaism@bu.edu",
-  },
-  {
-    label: "GitHub",
-    value: "MikaIsmayilov",
-    href: "https://github.com/MikaIsmayilov",
-  },
-  {
-    label: "LinkedIn",
-    value: "muslumismayilli",
-    href: "https://www.linkedin.com/in/muslumismayilli/",
-  },
+  { label: "Email", value: "mikaism@bu.edu", href: "mailto:mikaism@bu.edu" },
+  { label: "GitHub", value: "MikaIsmayilov", href: "https://github.com/MikaIsmayilov" },
+  { label: "LinkedIn", value: "muslumismayilli", href: "https://www.linkedin.com/in/muslumismayilli/" },
 ];
 
 export default function Contact() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
     const form = e.currentTarget;
     const data = new FormData(form);
-
     try {
       const res = await fetch("https://formspree.io/f/mlgaznly", {
         method: "POST",
@@ -71,282 +35,118 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" style={{ paddingBlock: "6rem" }}>
-      <div className="section-wrap">
-        <FadeUp>
-          <span
-            className="section-num"
-            style={{ display: "block", marginBottom: "1rem" }}
-          >
-            06 / Contact
-          </span>
-        </FadeUp>
-
-        <FadeUp delay={0.05}>
+    <section id="contact" className="section" style={{ paddingBottom: "clamp(5rem, 10vw, 8rem)" }}>
+      <div className="wrap">
+        <Reveal>
+          <p className="eyebrow" style={{ marginBottom: "1rem" }}>
+            Contact
+          </p>
+        </Reveal>
+        <Reveal delay={0.05}>
           <h2
+            className="display"
             style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              fontWeight: 700,
-              lineHeight: 1.05,
-              color: "var(--ink)",
-              marginBottom: "0.75rem",
+              fontSize: "clamp(3rem, 8vw, 6.5rem)",
+              fontWeight: 800,
+              lineHeight: 0.95,
+              letterSpacing: "-0.035em",
+              marginBottom: "1.25rem",
+              fontVariationSettings: '"opsz" 96, "wdth" 88',
             }}
           >
-            Say hi.
+            Say hi<span style={{ color: "var(--ember)" }}>.</span>
           </h2>
-        </FadeUp>
-        <FadeUp delay={0.08}>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "1.0625rem",
-              color: "var(--ink-muted)",
-              marginBottom: "3rem",
-              maxWidth: "480px",
-            }}
-          >
+        </Reveal>
+        <Reveal delay={0.08}>
+          <p className="prose" style={{ color: "var(--paper-dim)", maxWidth: "460px", marginBottom: "3.5rem" }}>
             I&apos;m looking for data science, ML, and analytics roles. Open to
             conversation — even if you&apos;re just exploring.
           </p>
-        </FadeUp>
+        </Reveal>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gap: "4rem",
-          }}
-          className="contact-grid"
-        >
-          {/* Direct links */}
-          <FadeUp delay={0.1}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3.5rem" }}>
+          <Reveal delay={0.1}>
+            <ul style={{ listStyle: "none", margin: 0, padding: 0, borderTop: "1px solid var(--rule)" }}>
               {contactLinks.map(({ label, value, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    href.startsWith("http") ? "noopener noreferrer" : undefined
-                  }
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "1.25rem 1.5rem",
-                    border: "1px solid var(--rule)",
-                    backgroundColor: "var(--bg-panel)",
-                    textDecoration: "none",
-                    transition: "border-color 200ms, transform 200ms",
-                    cursor: "pointer",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor =
-                      "var(--accent)";
-                    (e.currentTarget as HTMLElement).style.transform =
-                      "translateY(-2px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor =
-                      "var(--rule)";
-                    (e.currentTarget as HTMLElement).style.transform = "";
-                  }}
-                >
-                  <div>
-                    <span
-                      className="section-num"
-                      style={{
-                        display: "block",
-                        marginBottom: "0.2rem",
-                        letterSpacing: "0.1em",
-                      }}
-                    >
-                      {label}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        fontWeight: 600,
-                        fontSize: "1rem",
-                        color: "var(--ink)",
-                      }}
-                    >
-                      {value}
-                    </span>
-                  </div>
-                  <span
+                <li key={label} style={{ borderBottom: "1px solid var(--rule)" }}>
+                  <a
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="contact-row"
                     style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "1.125rem",
-                      color: "var(--accent)",
+                      display: "grid",
+                      gridTemplateColumns: "88px 1fr auto",
+                      alignItems: "center",
+                      gap: "1rem",
+                      padding: "1.25rem 0.25rem",
+                      transition: "padding-left 220ms var(--ease-out)",
                     }}
                   >
-                    →
-                  </span>
-                </a>
+                    <span className="eyebrow">{label}</span>
+                    <span className="display" style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.01em" }}>
+                      {value}
+                    </span>
+                    <span aria-hidden="true" className="mono contact-arrow" style={{ color: "var(--paper-faint)", transition: "transform 220ms var(--ease-out), color 220ms" }}>
+                      {href.startsWith("http") ? "↗" : "→"}
+                    </span>
+                  </a>
+                </li>
               ))}
-            </div>
-          </FadeUp>
+            </ul>
+          </Reveal>
 
-          {/* Contact form */}
-          <FadeUp delay={0.12}>
+          <Reveal delay={0.12}>
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div>
-                <label
-                  htmlFor="name"
-                  className="section-num"
-                  style={{
-                    display: "block",
-                    marginBottom: "0.4rem",
-                    letterSpacing: "0.1em",
-                  }}
-                >
-                  Name
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "0.75rem 1rem",
-                    border: "1px solid var(--rule)",
-                    backgroundColor: "var(--bg-panel)",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.9375rem",
-                    color: "var(--ink)",
-                    outline: "none",
-                    transition: "border-color 200ms",
-                  }}
-                  onFocus={(e) =>
-                    ((e.target as HTMLElement).style.borderColor = "var(--accent)")
-                  }
-                  onBlur={(e) =>
-                    ((e.target as HTMLElement).style.borderColor = "var(--rule)")
-                  }
-                />
+              <div className="contact-two" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
+                <div>
+                  <label htmlFor="name" className="eyebrow" style={{ display: "block", marginBottom: "0.5rem" }}>
+                    Name
+                  </label>
+                  <input id="name" name="name" type="text" required className="field" autoComplete="name" />
+                </div>
+                <div>
+                  <label htmlFor="email" className="eyebrow" style={{ display: "block", marginBottom: "0.5rem" }}>
+                    Email
+                  </label>
+                  <input id="email" name="email" type="email" required className="field" autoComplete="email" />
+                </div>
               </div>
-
               <div>
-                <label
-                  htmlFor="email"
-                  className="section-num"
-                  style={{
-                    display: "block",
-                    marginBottom: "0.4rem",
-                    letterSpacing: "0.1em",
-                  }}
-                >
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "0.75rem 1rem",
-                    border: "1px solid var(--rule)",
-                    backgroundColor: "var(--bg-panel)",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.9375rem",
-                    color: "var(--ink)",
-                    outline: "none",
-                    transition: "border-color 200ms",
-                  }}
-                  onFocus={(e) =>
-                    ((e.target as HTMLElement).style.borderColor = "var(--accent)")
-                  }
-                  onBlur={(e) =>
-                    ((e.target as HTMLElement).style.borderColor = "var(--rule)")
-                  }
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="section-num"
-                  style={{
-                    display: "block",
-                    marginBottom: "0.4rem",
-                    letterSpacing: "0.1em",
-                  }}
-                >
+                <label htmlFor="message" className="eyebrow" style={{ display: "block", marginBottom: "0.5rem" }}>
                   Message
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={5}
-                  style={{
-                    width: "100%",
-                    padding: "0.75rem 1rem",
-                    border: "1px solid var(--rule)",
-                    backgroundColor: "var(--bg-panel)",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.9375rem",
-                    color: "var(--ink)",
-                    outline: "none",
-                    resize: "vertical",
-                    transition: "border-color 200ms",
-                  }}
-                  onFocus={(e) =>
-                    ((e.target as HTMLElement).style.borderColor = "var(--accent)")
-                  }
-                  onBlur={(e) =>
-                    ((e.target as HTMLElement).style.borderColor = "var(--rule)")
-                  }
-                />
+                <textarea id="message" name="message" required rows={5} className="field" style={{ resize: "vertical" }} />
               </div>
 
               {status === "sent" ? (
-                <p
-                  style={{
-                    color: "var(--signal)",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 600,
-                    fontSize: "0.9375rem",
-                  }}
-                >
+                <p className="mono" style={{ color: "var(--ember)", fontSize: "0.8125rem", letterSpacing: "0.06em" }}>
                   Message sent — I&apos;ll be in touch.
                 </p>
               ) : (
-                <button
-                  type="submit"
-                  className="btn-accent"
-                  disabled={status === "sending"}
-                  style={{ alignSelf: "flex-start" }}
-                >
+                <button type="submit" className="btn-ember" disabled={status === "sending"} style={{ alignSelf: "flex-start" }}>
                   {status === "sending" ? "Sending…" : "Send message"}
                 </button>
               )}
 
               {status === "error" && (
-                <p
-                  style={{
-                    color: "#e53e3e",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.875rem",
-                  }}
-                >
+                <p className="prose" style={{ color: "#FF8A80", fontSize: "0.9375rem" }}>
                   Something went wrong. Email me directly at mikaism@bu.edu.
                 </p>
               )}
             </form>
-          </FadeUp>
+          </Reveal>
         </div>
       </div>
 
       <style>{`
-        @media (min-width: 700px) {
-          .contact-grid {
-            grid-template-columns: 1fr 1fr !important;
-          }
+        .contact-row:hover { padding-left: 0.75rem !important; }
+        .contact-row:hover .contact-arrow { transform: translateX(4px); color: var(--ember); }
+        @media (min-width: 560px) {
+          .contact-two { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (min-width: 860px) {
+          .contact-grid { grid-template-columns: 6fr 6fr !important; gap: 5rem !important; }
         }
       `}</style>
     </section>
