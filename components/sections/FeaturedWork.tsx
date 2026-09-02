@@ -32,14 +32,13 @@ const studies: Study[] = [
   },
   {
     slug: "aurelian",
-    href: "https://aurelianfits.lovable.app",
     title: "Aurelian",
-    status: { label: "In progress", kind: "wip" },
-    role: "Solo build · personal",
+    status: { label: "Private beta", kind: "wip" },
+    role: "Solo build · 470+ commits",
     oneliner:
-      "An AI stylist that turns photos of your clothes into a structured wardrobe, then builds outfits for an occasion through plain-language chat.",
-    finding: "Prototype live · full rebuild with a vision model and custom backend underway",
-    tech: ["LLM", "Vision", "Web app"],
+      "An AI stylist that knows your wardrobe. Photograph your clothes and it catalogs them, finds the gaps, plans weather-aware packing for trips, and answers style questions with your real closet as context.",
+    finding: "11 Claude-backed edge functions · Stripe billing with credit gating · 58 automated tests",
+    tech: ["Claude Haiku 4.5", "Supabase", "React 19", "Stripe"],
     chart: <WardrobeGrid />,
   },
 ];

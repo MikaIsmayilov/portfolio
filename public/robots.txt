@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mikaismayilli.com/sitemap.xml
+Sitemap: https://mikaismayilli.vercel.app/sitemap.xml

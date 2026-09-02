@@ -4,6 +4,7 @@ import {
   Source_Serif_4,
   IBM_Plex_Mono,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -29,7 +30,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mikaismayilli.com"),
+  metadataBase: new URL("https://mikaismayilli.vercel.app"),
   title: "Mika Ismayilli — Data Scientist",
   description:
     "Behavioral scientist turned data scientist. MSBA candidate at Boston University. I build models, run experiments, and ship tools.",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
       "Behavioral scientist turned data scientist. MSBA candidate at Boston University.",
     type: "website",
     locale: "en_US",
-    url: "https://mikaismayilli.com",
+    url: "https://mikaismayilli.vercel.app",
   },
   twitter: {
     card: "summary_large_image",
@@ -62,7 +63,10 @@ export default function RootLayout({
       lang="en"
       className={`${bricolage.variable} ${sourceSerif.variable} ${plexMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

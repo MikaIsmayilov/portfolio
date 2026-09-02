@@ -3,6 +3,7 @@ import CaseStudyLayout, {
   Section,
   BodyText,
   BulletList,
+  Figure,
 } from "@/components/CaseStudyLayout";
 
 export const metadata: Metadata = {
@@ -89,11 +90,25 @@ export default function BeatTheStreet() {
         </BodyText>
         <BodyText>
           The final model is LightGBM, tuned on the validation set. Every
-          prediction surfaces a SHAP waterfall chart showing exactly which
+          prediction surfaces a SHAP breakdown showing exactly which
           features pushed the model toward its answer — so users can see
           whether the model is relying on analyst revisions, price momentum, or
           macro conditions.
         </BodyText>
+        <Figure
+          src="/work/beatthestreet-prediction.jpg"
+          alt="BeatTheStreet live prediction for NVDA: beat with 87.5% confidence, with beat, meet, and miss probability bars and a note that 21 of 27 features were available live."
+          caption="Live prediction · NVDA, pulled from the deployed app · 21 of 27 features available live, the rest imputed with training medians"
+          width={708}
+          height={450}
+        />
+        <Figure
+          src="/work/beatthestreet-shap.jpg"
+          alt="SHAP contribution bars for the NVDA prediction: revenue growth, return on assets, and analyst count push toward beat; accruals and stock price push against."
+          caption="SHAP contributions for the same prediction · green pushes toward the predicted class, red against · raw feature value under each name"
+          width={708}
+          height={622}
+        />
       </Section>
 
       <Section title="What I found">
