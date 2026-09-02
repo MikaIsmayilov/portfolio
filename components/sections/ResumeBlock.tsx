@@ -28,7 +28,7 @@ const education = [
   {
     degree: "M.S. in Business Analytics",
     institution: "Boston University, Questrom School of Business",
-    period: "Dec 2026",
+    period: "Jan 2027",
     notes: ["3.2 GPA", "In progress"],
   },
   {
@@ -41,6 +41,16 @@ const education = [
 
 const experience = [
   {
+    title: "Admissions Ambassador, M.S. in Business Analytics",
+    org: "Boston University, Questrom School of Business",
+    location: "Boston, MA",
+    period: "Oct 2025 – Present",
+    bullets: [
+      "Selected as an Admissions Ambassador for BU's M.S. in Business Analytics program, representing it to prospective students weighing the degree against other analytics programs.",
+      "Serve as a current-student point of contact, giving first-hand perspective on the curriculum, the pre-program analytics bootcamp, and the LAUNCH experience.",
+    ],
+  },
+  {
     title: "Data Analysis Intern",
     org: "Outfox Energy (Redfish Systems)",
     location: "Leicester, UK (Remote)",
@@ -48,7 +58,7 @@ const experience = [
     bullets: [
       "Automated recurring reporting for commercial and operations teams by building refreshable Power BI dashboards with DAX measures and Power Query transformations, replacing manual spreadsheet reporting.",
       "Supported credit-balance and arrears monitoring in line with Ofgem expectations, analyzing direct-debit levels against actual consumption to flag over- and under-set customer accounts.",
-      "Queried the group's SQL Server reporting database and cleaned, validated, and explored large operational datasets in Python (pandas) to surface consumption and payment anomalies.",
+      "Queried a 572-table SQL Server reporting database and cleaned, validated, and explored large operational datasets in Python (pandas) to surface consumption and payment anomalies.",
     ],
   },
   {
@@ -95,8 +105,8 @@ const experience = [
 ];
 
 const skills = {
-  "Languages & Tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "Streamlit", "Adobe Creative Cloud", "Premiere Pro", "Photoshop", "MS Office"],
-  "Python Libraries": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "SHAP", "NetworkX", "Matplotlib", "Seaborn", "Hugging Face"],
+  "Languages & Tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "SAP", "Streamlit", "FastAPI", "Docker", "Vercel", "Supabase", "Adobe Creative Cloud", "MS Office"],
+  "Python Libraries": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "LightGBM", "SHAP", "pyfixest", "NetworkX", "GeoPandas", "Matplotlib", "Seaborn", "Hugging Face"],
   "Spoken Languages": ["English (native)", "Russian (native)", "Azerbaijani (proficient)", "Turkish (proficient)", "Spanish (intermediate)"],
 };
 
