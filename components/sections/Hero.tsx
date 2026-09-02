@@ -4,170 +4,225 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-const ScatterViz = dynamic(() => import("@/components/ScatterViz"), {
+const SignalField = dynamic(() => import("@/components/SignalField"), {
   ssr: false,
 });
 
-const MotionH1 = motion.h1;
-const MotionP = motion.p;
-const MotionDiv = motion.div;
+const LINE_ONE = "Behavioral scientist turned data scientist.";
+const LINE_TWO =
+  "I use analytics and ML to answer the questions psychology taught me to ask.";
+
+function MaskedLine({
+  text,
+  startDelay,
+}: {
+  text: string;
+  startDelay: number;
+}) {
+  const words = text.split(" ");
+  return (
+    <span style={{ display: "block" }}>
+      {words.map((w, i) => (
+        <span
+          key={`${w}-${i}`}
+          style={{
+            display: "inline-block",
+            overflow: "hidden",
+            verticalAlign: "top",
+            paddingBottom: "0.14em",
+            marginBottom: "-0.14em",
+          }}
+        >
+          <motion.span
+            style={{ display: "inline-block" }}
+            initial={{ y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{
+              duration: 0.7,
+              delay: startDelay + i * 0.038,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            {w}
+            {i < words.length - 1 ? " " : ""}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+}
 
 export default function Hero() {
   return (
     <section
       id="hero"
       style={{
-        minHeight: "calc(100vh - 64px)",
-        display: "grid",
-        gridTemplateColumns: "1fr",
+        position: "relative",
+        minHeight: "100svh",
+        display: "flex",
         alignItems: "center",
+        overflow: "hidden",
         borderBottom: "1px solid var(--rule)",
       }}
     >
-      <div className="section-wrap" style={{ paddingBlock: "6rem" }}>
-        <div
+      <SignalField />
+
+      {/* Scrim so the type stays readable over the field */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 1,
+          background:
+            "linear-gradient(90deg, rgba(9,13,30,0.96) 0%, rgba(9,13,30,0.82) 34%, rgba(9,13,30,0.28) 62%, rgba(9,13,30,0) 100%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: "28%",
+          pointerEvents: "none",
+          zIndex: 1,
+          background:
+            "linear-gradient(180deg, rgba(9,13,30,0) 0%, rgba(9,13,30,0.85) 100%)",
+        }}
+      />
+
+      <div
+        className="wrap"
+        style={{
+          position: "relative",
+          zIndex: 2,
+          paddingTop: "8.5rem",
+          paddingBottom: "7rem",
+        }}
+      >
+        <motion.div
+          className="eyebrow"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gap: "3rem",
+            display: "flex",
             alignItems: "center",
+            gap: "0.75rem",
+            marginBottom: "2rem",
+            color: "var(--paper-dim)",
           }}
-          className="hero-grid"
         >
-          {/* Left: copy */}
-          <div style={{ maxWidth: "720px" }}>
-            <MotionDiv
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              style={{ marginBottom: "1.5rem" }}
-            >
-              <span
-                className="section-num"
-                style={{ display: "block", marginBottom: "0.75rem" }}
-              >
-                00 / Hello
-              </span>
-            </MotionDiv>
+          <span className="dot-live" />
+          <span>Boston, MA · MSBA candidate, Boston University · Open to work</span>
+        </motion.div>
 
-            <MotionH1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2.75rem, 6vw, 5rem)",
-                fontWeight: 900,
-                lineHeight: 1.0,
-                color: "var(--ink)",
-                marginBottom: "1.25rem",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Mika Ismayilli
-            </MotionH1>
+        <motion.h1
+          className="display"
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            fontSize: "clamp(3.6rem, 10.5vw, 8.75rem)",
+            fontWeight: 800,
+            lineHeight: 0.92,
+            letterSpacing: "-0.035em",
+            color: "var(--paper)",
+            marginBottom: "2.25rem",
+            fontVariationSettings: '"opsz" 96, "wdth" 88',
+          }}
+        >
+          Mika
+          <br />
+          Ismayilli
+        </motion.h1>
 
-            <MotionP
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.25rem, 2.5vw, 1.875rem)",
-                fontWeight: 300,
-                fontStyle: "italic",
-                color: "var(--ink)",
-                lineHeight: 1.3,
-                marginBottom: "1rem",
-                maxWidth: "600px",
-              }}
-            >
-              Behavioral scientist turned data scientist.
-              <br />
-              I use analytics and ML to answer the questions
-              psychology taught me to ask.
-            </MotionP>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "clamp(1.25rem, 2.4vw, 1.75rem)",
+            lineHeight: 1.32,
+            color: "var(--paper)",
+            maxWidth: "640px",
+            marginBottom: "1.5rem",
+            fontVariationSettings: '"opsz" 28',
+          }}
+        >
+          <MaskedLine text={LINE_ONE} startDelay={0.5} />
+          <MaskedLine text={LINE_TWO} startDelay={0.78} />
+        </p>
 
-            <MotionP
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "1rem",
-                fontWeight: 400,
-                color: "var(--ink-muted)",
-                lineHeight: 1.6,
-                marginBottom: "2.5rem",
-                maxWidth: "520px",
-              }}
-            >
-              MSBA candidate at Boston University&apos;s Questrom School of Business
-              with a BS in Psychology from Suffolk. I build models, run
-              experiments, and ship tools — from causal inference studies on
-              consumer behavior to deployed ML apps predicting earnings surprises.
-            </MotionP>
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.35, ease: "easeOut" }}
+          className="prose"
+          style={{
+            fontSize: "1.0625rem",
+            color: "var(--paper-dim)",
+            maxWidth: "520px",
+            marginBottom: "2.75rem",
+          }}
+        >
+          MSBA candidate at Boston University&apos;s Questrom School of Business
+          with a BS in Psychology from Suffolk. I build models, run experiments,
+          and ship tools — from causal inference studies on consumer behavior to
+          a deployed ML app predicting earnings surprises.
+        </motion.p>
 
-            <MotionDiv
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.55, ease: "easeOut" }}
-              style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
-            >
-              <Link href="/#work" className="btn-accent">
-                See the work
-              </Link>
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost"
-              >
-                Download résumé
-              </a>
-            </MotionDiv>
-          </div>
-
-          {/* Right: scatter viz */}
-          <MotionDiv
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.0, delay: 0.6, ease: "easeOut" }}
-            style={{
-              height: "340px",
-              border: "1px solid var(--rule)",
-              backgroundColor: "var(--bg-panel)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-            className="scatter-panel"
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.6, ease: "easeOut" }}
+          style={{ display: "flex", gap: "0.85rem", flexWrap: "wrap" }}
+        >
+          <Link href="/#work" className="btn-ember">
+            See the work <span aria-hidden="true">→</span>
+          </Link>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-line"
           >
-            <div
-              className="section-num"
-              style={{
-                position: "absolute",
-                top: "1rem",
-                left: "1rem",
-                zIndex: 1,
-              }}
-            >
-              live · model space
-            </div>
-            <ScatterViz />
-          </MotionDiv>
-        </div>
+            Résumé <span aria-hidden="true">↗</span>
+          </a>
+        </motion.div>
       </div>
 
-      <style>{`
-        @media (min-width: 900px) {
-          .hero-grid {
-            grid-template-columns: 7fr 5fr !important;
-          }
-          .scatter-panel {
-            height: 420px !important;
-          }
-        }
-      `}</style>
+      {/* Scroll hint */}
+      <motion.div
+        aria-hidden="true"
+        className="eyebrow"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 2.6 }}
+        style={{
+          position: "absolute",
+          left: "clamp(1.25rem, 5vw, 5rem)",
+          bottom: "2rem",
+          zIndex: 3,
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+        }}
+      >
+        <span
+          style={{
+            display: "inline-block",
+            width: "1px",
+            height: "28px",
+            background:
+              "linear-gradient(180deg, var(--paper-faint), transparent)",
+          }}
+        />
+        Scroll
+      </motion.div>
     </section>
   );
 }

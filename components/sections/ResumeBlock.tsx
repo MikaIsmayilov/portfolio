@@ -1,28 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-
-function FadeUp({
-  children,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import Reveal from "@/components/Reveal";
 
 const education = [
   {
@@ -45,6 +23,7 @@ const experience = [
     org: "Boston University, Questrom School of Business",
     location: "Boston, MA",
     period: "Oct 2025 – Present",
+    current: true,
     bullets: [
       "Selected as an Admissions Ambassador for BU's M.S. in Business Analytics program, representing it to prospective students weighing the degree against other analytics programs.",
       "Serve as a current-student point of contact, giving first-hand perspective on the curriculum, the pre-program analytics bootcamp, and the LAUNCH experience.",
@@ -105,174 +84,194 @@ const experience = [
 ];
 
 const skills = {
-  "Languages & Tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "SAP", "Streamlit", "FastAPI", "Docker", "Vercel", "Supabase", "Adobe Creative Cloud", "MS Office"],
-  "Python Libraries": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "LightGBM", "SHAP", "pyfixest", "NetworkX", "GeoPandas", "Matplotlib", "Seaborn", "Hugging Face"],
-  "Spoken Languages": ["English (native)", "Russian (native)", "Azerbaijani (proficient)", "Turkish (proficient)", "Spanish (intermediate)"],
+  "Languages & tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "SAP", "Streamlit", "FastAPI", "Docker", "Vercel", "Supabase", "Adobe Creative Cloud", "MS Office"],
+  "Python libraries": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "LightGBM", "SHAP", "pyfixest", "NetworkX", "GeoPandas", "Matplotlib", "Seaborn", "Hugging Face"],
+  "Spoken languages": ["English (native)", "Russian (native)", "Azerbaijani (proficient)", "Turkish (proficient)", "Spanish (intermediate)"],
 };
+
+function Label({ children }: { children: React.ReactNode }) {
+  return (
+    <h3
+      className="eyebrow"
+      style={{
+        color: "var(--paper-dim)",
+        borderBottom: "1px solid var(--rule)",
+        paddingBottom: "0.75rem",
+        marginBottom: "1.5rem",
+        fontFamily: "var(--font-mono)",
+        lineHeight: 1,
+      }}
+    >
+      {children}
+    </h3>
+  );
+}
 
 export default function ResumeBlock() {
   return (
-    <section
-      id="resume"
-      style={{ paddingBlock: "6rem", borderBottom: "1px solid var(--rule)" }}
-    >
-      <div className="section-wrap">
-        <FadeUp>
-          <span className="section-num" style={{ display: "block", marginBottom: "1rem" }}>
-            05 / Résumé
-          </span>
-        </FadeUp>
-
-        <FadeUp delay={0.05}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "1rem",
-              marginBottom: "3rem",
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
-                fontWeight: 700,
-                lineHeight: 1.1,
-                color: "var(--ink)",
-              }}
-            >
-              Résumé at a glance
-            </h2>
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-ghost">
-              Download PDF
+    <section id="resume" className="section">
+      <div className="wrap">
+        <Reveal>
+          <div className="section-head">
+            <div>
+              <p className="eyebrow" style={{ marginBottom: "1rem" }}>
+                Résumé
+              </p>
+              <h2
+                className="display"
+                style={{
+                  fontSize: "clamp(2rem, 4.5vw, 3.25rem)",
+                  fontWeight: 700,
+                  lineHeight: 1.0,
+                }}
+              >
+                At a glance
+              </h2>
+            </div>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-line">
+              Download PDF ↗
             </a>
           </div>
-        </FadeUp>
+        </Reveal>
 
-        {/* Education + Skills row */}
+        {/* Education + Skills */}
         <div
-          style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3rem", marginBottom: "3rem" }}
-          className="resume-top-grid"
+          className="resume-top"
+          style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3.5rem", marginBottom: "4.5rem" }}
         >
-          {/* Education */}
-          <FadeUp delay={0.1}>
-            <div>
-              <h3
-                className="section-num"
-                style={{
-                  fontSize: "0.6875rem",
-                  color: "var(--accent)",
-                  letterSpacing: "0.12em",
-                  marginBottom: "1.25rem",
-                  borderBottom: "1px solid var(--rule)",
-                  paddingBottom: "0.5rem",
-                }}
-              >
-                Education
-              </h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                {education.map((e) => (
-                  <div key={e.degree}>
-                    <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.9375rem", color: "var(--ink)", marginBottom: "0.2rem" }}>
-                      {e.degree}
-                    </p>
-                    <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "var(--ink-muted)", marginBottom: "0.4rem" }}>
-                      {e.institution}
-                    </p>
-                    <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                      <span className="tech-pill">{e.period}</span>
-                      {e.notes.map((n) => <span key={n} className="tech-pill">{n}</span>)}
-                    </div>
+          <Reveal delay={0.05}>
+            <Label>Education</Label>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+              {education.map((e) => (
+                <div key={e.degree}>
+                  <p
+                    className="display"
+                    style={{ fontSize: "1.1875rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.25rem" }}
+                  >
+                    {e.degree}
+                  </p>
+                  <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)", marginBottom: "0.6rem" }}>
+                    {e.institution}
+                  </p>
+                  <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+                    <span className="pill" style={{ color: "var(--ember)", borderColor: "var(--ember-dim)" }}>
+                      {e.period}
+                    </span>
+                    {e.notes.map((n) => (
+                      <span key={n} className="pill">
+                        {n}
+                      </span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          </FadeUp>
+          </Reveal>
 
-          {/* Skills */}
-          <FadeUp delay={0.12}>
-            <div>
-              <h3
-                className="section-num"
-                style={{
-                  fontSize: "0.6875rem",
-                  color: "var(--accent)",
-                  letterSpacing: "0.12em",
-                  marginBottom: "1.25rem",
-                  borderBottom: "1px solid var(--rule)",
-                  paddingBottom: "0.5rem",
-                }}
-              >
-                Skills
-              </h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                {Object.entries(skills).map(([category, items]) => (
-                  <div key={category}>
-                    <p className="section-num" style={{ marginBottom: "0.4rem", color: "var(--ink-muted)", letterSpacing: "0.08em" }}>
-                      {category}
-                    </p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                      {items.map((item) => <span key={item} className="tech-pill">{item}</span>)}
-                    </div>
+          <Reveal delay={0.1}>
+            <Label>Skills</Label>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              {Object.entries(skills).map(([category, items]) => (
+                <div key={category}>
+                  <p className="eyebrow" style={{ marginBottom: "0.5rem", letterSpacing: "0.1em" }}>
+                    {category}
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                    {items.map((item) => (
+                      <span key={item} className="pill">
+                        {item}
+                      </span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          </FadeUp>
+          </Reveal>
         </div>
 
-        {/* Experience — full width */}
-        <FadeUp delay={0.14}>
-          <div>
-            <h3
-              className="section-num"
-              style={{
-                fontSize: "0.6875rem",
-                color: "var(--accent)",
-                letterSpacing: "0.12em",
-                marginBottom: "1.25rem",
-                borderBottom: "1px solid var(--rule)",
-                paddingBottom: "0.5rem",
-              }}
-            >
-              Experience
-            </h3>
-            <div
-              style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}
-              className="experience-grid"
-            >
-              {experience.map((e) => (
-                <div key={e.title + e.period}>
-                  <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.25rem", marginBottom: "0.15rem" }}>
-                    <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.9375rem", color: "var(--ink)" }}>
-                      {e.title}
-                    </p>
-                    <span className="tech-pill">{e.period}</span>
-                  </div>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "var(--ink-muted)", marginBottom: "0.6rem" }}>
+        {/* Experience — a real timeline */}
+        <Reveal delay={0.1}>
+          <Label>Experience</Label>
+        </Reveal>
+        <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+          {experience.map((e, i) => (
+            <Reveal key={e.title + e.period} as="li" delay={0.04 * i}>
+              <div className="tl-row">
+                <div className="tl-date">
+                  <span
+                    className="mono"
+                    style={{
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.06em",
+                      color: e.current ? "var(--ember)" : "var(--paper-dim)",
+                    }}
+                  >
+                    {e.period}
+                  </span>
+                </div>
+                <div className="tl-body">
+                  <span
+                    aria-hidden="true"
+                    className="tl-node"
+                    style={{
+                      backgroundColor: e.current ? "var(--ember)" : "var(--ground)",
+                      borderColor: e.current ? "var(--ember)" : "var(--cool)",
+                      boxShadow: e.current ? "0 0 0 4px var(--ember-dim)" : "none",
+                    }}
+                  />
+                  <p
+                    className="display"
+                    style={{ fontSize: "1.1875rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.2rem" }}
+                  >
+                    {e.title}
+                  </p>
+                  <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)", marginBottom: "0.9rem" }}>
                     {e.org} · {e.location}
                   </p>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem" }}>
                     {e.bullets.map((b) => (
-                      <li key={b} style={{ display: "flex", gap: "0.6rem", fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "var(--ink)", lineHeight: 1.6 }}>
-                        <span style={{ color: "var(--accent)", flexShrink: 0 }}>—</span>
+                      <li
+                        key={b}
+                        className="prose"
+                        style={{ display: "flex", gap: "0.7rem", fontSize: "0.9875rem", lineHeight: 1.6, maxWidth: "720px" }}
+                      >
+                        <span aria-hidden="true" style={{ color: "var(--ember)", flexShrink: 0 }}>—</span>
                         <span>{b}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              ))}
-            </div>
-          </div>
-        </FadeUp>
+              </div>
+            </Reveal>
+          ))}
+        </ol>
       </div>
 
       <style>{`
-        @media (min-width: 700px) {
-          .resume-top-grid { grid-template-columns: 1fr 1fr !important; }
-          .experience-grid { grid-template-columns: 1fr 1fr !important; }
+        .tl-row {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+        .tl-body {
+          position: relative;
+          border-left: 1px solid var(--rule-strong);
+          padding: 0 0 2.75rem 1.75rem;
+        }
+        .tl-node {
+          position: absolute;
+          left: -5px;
+          top: 0.45rem;
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          border: 1px solid;
+        }
+        .tl-date { padding-top: 0.2rem; padding-left: 1.75rem; }
+        @media (min-width: 760px) {
+          .resume-top { grid-template-columns: 5fr 7fr !important; gap: 5rem !important; }
+          .tl-row { grid-template-columns: 200px 1fr; gap: 0; }
+          .tl-date { padding-left: 0; }
         }
       `}</style>
     </section>

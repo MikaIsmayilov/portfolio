@@ -14,7 +14,8 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -22,16 +23,22 @@ export default function Nav() {
   return (
     <header
       style={{
-        position: "sticky",
+        position: "fixed",
         top: 0,
+        left: 0,
+        right: 0,
         zIndex: 100,
-        backgroundColor: scrolled ? "var(--bg-panel)" : "transparent",
-        borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent",
-        transition: "background-color 300ms ease, border-color 300ms ease",
+        backgroundColor: scrolled ? "rgba(9, 13, 30, 0.72)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
+        borderBottom: `1px solid ${scrolled ? "var(--rule)" : "transparent"}`,
+        transition:
+          "background-color 320ms ease, border-color 320ms ease, backdrop-filter 320ms ease",
       }}
     >
       <nav
-        className="section-wrap"
+        className="wrap"
+        aria-label="Primary"
         style={{
           display: "flex",
           alignItems: "center",
@@ -39,69 +46,49 @@ export default function Nav() {
           height: "64px",
         }}
       >
-        {/* Wordmark */}
         <Link
           href="/"
+          className="display"
           style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "1.125rem",
+            fontSize: "1.0625rem",
             fontWeight: 700,
-            color: "var(--ink)",
-            letterSpacing: "-0.01em",
+            color: "var(--paper)",
+            letterSpacing: "-0.02em",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.6rem",
           }}
         >
+          <span
+            aria-hidden="true"
+            style={{
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+              backgroundColor: "var(--ember)",
+              boxShadow: "0 0 12px var(--ember-dim)",
+            }}
+          />
           Mika Ismayilli
         </Link>
 
-        {/* Nav links */}
-        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-          {links.map(({ href, label }) =>
-            label === "Résumé" ? (
-              <a
-                key={label}
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-underline"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: "var(--ink-muted)",
-                  transition: "color 200ms",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--ink)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--ink-muted)")
-                }
-              >
-                {label}
-              </a>
-            ) : (
-              <Link
-                key={label}
-                href={href}
-                className="link-underline"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: "var(--ink-muted)",
-                  transition: "color 200ms",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--ink)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--ink-muted)")
-                }
-              >
-                {label}
-              </Link>
-            )
-          )}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "clamp(1rem, 2.5vw, 2.25rem)",
+          }}
+        >
+          {links.map(({ href, label }) => (
+            <Link
+              key={label}
+              href={href}
+              className="link-draw eyebrow"
+              style={{ color: "var(--paper-dim)", fontSize: "0.6875rem" }}
+            >
+              {label}
+            </Link>
+          ))}
         </div>
       </nav>
     </header>

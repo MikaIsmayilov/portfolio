@@ -1,26 +1,31 @@
 import type { Metadata } from "next";
-import { Fraunces, Montserrat, JetBrains_Mono } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Source_Serif_4,
+  IBM_Plex_Mono,
+} from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-bricolage",
   display: "swap",
-  axes: ["opsz", "SOFT", "WONK"],
+  axes: ["opsz", "wdth"],
 });
 
-const montserrat = Montserrat({
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-source-serif",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-plex-mono",
   display: "swap",
-  weight: ["400", "500", "700"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -55,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${montserrat.variable} ${jetbrainsMono.variable}`}
+      className={`${bricolage.variable} ${sourceSerif.variable} ${plexMono.variable}`}
     >
       <body>{children}</body>
     </html>
