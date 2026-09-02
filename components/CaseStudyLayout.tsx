@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRef } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import Reveal from "@/components/Reveal";
 import { useCountUp } from "@/components/charts/useCountUp";
 
@@ -66,7 +65,6 @@ export default function CaseStudyLayout({
 
   return (
     <>
-      <CustomCursor />
       <Nav />
       <main style={{ paddingTop: "64px", paddingBottom: "6rem" }}>
         <section style={{ paddingBlock: "5rem 4rem", borderBottom: "1px solid var(--rule)" }}>
