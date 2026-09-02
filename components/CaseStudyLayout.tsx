@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import Nav from "@/components/Nav";
@@ -41,6 +42,7 @@ type Props = {
   tech: string[];
   github?: string | string[];
   demo?: string;
+  demoLabel?: string;
   badge?: string;
   badgeColor?: "signal" | "accent";
   children: React.ReactNode;
@@ -53,6 +55,7 @@ export default function CaseStudyLayout({
   tech,
   github,
   demo,
+  demoLabel = "Live demo",
   badge,
   badgeColor = "accent",
   children,
@@ -166,7 +169,7 @@ export default function CaseStudyLayout({
 
               {demo && (
                 <a href={demo} target="_blank" rel="noopener noreferrer" className="btn-ember" style={{ padding: "0.6rem 1rem" }}>
-                  Live demo ↗
+                  {demoLabel} ↗
                 </a>
               )}
 
@@ -221,6 +224,52 @@ export function Section({ title, children }: { title: string; children: React.Re
         }
       `}</style>
     </Reveal>
+  );
+}
+
+/** A real screenshot with a mono caption. Framed like a plot, not a marketing image. */
+export function Figure({
+  src,
+  alt,
+  caption,
+  width,
+  height,
+}: {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}) {
+  return (
+    <figure style={{ margin: "1.5rem 0 2rem" }}>
+      <div
+        style={{
+          border: "1px solid var(--rule-strong)",
+          backgroundColor: "var(--ground-2)",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 8,
+            left: 8,
+            width: 12,
+            height: 12,
+            borderTop: "1px solid var(--ember)",
+            borderLeft: "1px solid var(--ember)",
+            zIndex: 1,
+          }}
+        />
+        <Image src={src} alt={alt} width={width} height={height} style={{ width: "100%", height: "auto" }} sizes="(max-width: 860px) 100vw, 760px" />
+      </div>
+      <figcaption className="eyebrow" style={{ marginTop: "0.6rem", letterSpacing: "0.1em", lineHeight: 1.5 }}>
+        {caption}
+      </figcaption>
+    </figure>
   );
 }
 
