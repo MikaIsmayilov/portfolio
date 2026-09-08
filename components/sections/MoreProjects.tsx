@@ -6,6 +6,17 @@ import type { ExpandableProject } from "@/components/ExpandableCard";
 
 const tier2: ExpandableProject[] = [
   {
+    slug: "bu-ship-chatbot",
+    title: "BU SHIP Chatbot — RAG vs. LLM-Only",
+    course: "BU · BA840 · Generative AI",
+    oneliner:
+      "A retrieval-augmented chatbot answering Boston University Student Health Insurance Plan coverage questions, benchmarked against retrieval-only and LLM-only baselines across a 240-run evaluation grid.",
+    tech: ["FAISS", "Sentence-Transformers", "Qwen2.5-1.5B-Instruct", "Python"],
+    role: "Solo build",
+    extended:
+      "I combined a FAISS vector index over a 12-document SHIP policy corpus with Qwen2.5-1.5B-Instruct for generation, then stress-tested it against retrieval-only and LLM-only modes. I designed a 30-prompt red-teaming set spanning normal, ambiguous, and adversarial coverage questions, ran a 240-run grid across three system modes, two temperatures, and two retrieval depths, and triaged every response into a five-way decision label (covered, not covered, prior authorization required, escalate, or abstain). I labeled each response for correctness, hallucination, and harm severity — RAG and LLM-only were correct on only 27.5% and 16.7% of prompts versus 100% for retrieval-only, and incorrect answers carried an average harm severity of about 4.1 out of 5. The finding I care about: for a task with real financial and medical stakes, the more \"impressive\" generative modes were also the most confidently wrong.",
+  },
+  {
     slug: "f1-analysis",
     title: "F1 Performance Analysis",
     course: "BU · BA775 · Analytics for Business",

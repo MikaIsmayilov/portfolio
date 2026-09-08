@@ -84,8 +84,9 @@ const experience = [
 ];
 
 const skills = {
-  "Languages & tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "SAP", "Streamlit", "FastAPI", "Docker", "Vercel", "Supabase", "Adobe Creative Cloud", "MS Office"],
-  "Python libraries": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "LightGBM", "SHAP", "pyfixest", "NetworkX", "GeoPandas", "Matplotlib", "Seaborn", "Hugging Face"],
+  "Languages & tools": ["Python", "R", "SQL", "Tableau", "Power BI", "BigQuery", "Git", "SAP", "Streamlit", "FastAPI", "Docker", "Vercel", "Supabase", "MS Office"],
+  "Python libraries": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "LightGBM", "SHAP", "PyTorch", "Hugging Face Transformers", "Sentence-Transformers", "FAISS", "NetworkX", "GeoPandas", "Matplotlib", "Seaborn", "pyfixest"],
+  "Additional tools": ["Qualtrics", "Jupyter", "WRDS", "FRED", "React", "TypeScript", "Vite", "Tailwind", "Adobe Creative Cloud"],
   "Spoken languages": ["English (native)", "Russian (native)", "Azerbaijani (proficient)", "Turkish (proficient)", "Spanish (intermediate)"],
 };
 

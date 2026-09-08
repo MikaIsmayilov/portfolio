@@ -108,10 +108,12 @@ export default function About() {
                 My work sits at the intersection of behavioral science and data
                 science. I&apos;ve run randomized experiments on consumer
                 behavior, built causal inference pipelines in Python, shipped a
-                full-stack ML app predicting earnings surprises, and analyzed
-                everything from Formula 1 lap times to global semiconductor
-                trade. I speak five languages and I still get the biggest rush
-                from the moment a messy dataset turns into a clear answer.
+                full-stack ML app predicting earnings surprises, red-teamed a
+                RAG chatbot to find where it&apos;s confidently wrong, and
+                analyzed everything from Formula 1 lap times to global
+                semiconductor trade. I speak five languages and I still get the
+                biggest rush from the moment a messy dataset turns into a clear
+                answer.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
