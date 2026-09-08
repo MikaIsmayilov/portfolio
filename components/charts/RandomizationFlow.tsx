@@ -123,7 +123,7 @@ export default function RandomizationFlow() {
       >
         <line x1={196} x2={344} y1={176} y2={176} stroke="var(--rule)" strokeWidth="1" />
         <text x={196} y={192} className="mono" fill="var(--paper-dim)" fontSize="9.5">
-          × 3 products each → 180 obs. long panel
+          × 3 products → 180 obs.
         </text>
       </motion.g>
     </svg>
