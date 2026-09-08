@@ -114,6 +114,28 @@ const tier2: ExpandableProject[] = [
     extended:
       "As data cleaning and preprocessing lead I built the raw-to-clean pipeline across multiple COMTRADE exports and auxiliary datasets — reconciling inconsistent country codes, handling missing trade flows, and merging wafer fault rates with monthly SOXX candlestick data. The choropleth of global import/export flows is the most visually striking deliverable from any of my coursework, and it maps directly onto live geopolitical questions around the CHIPS Act and Taiwan export controls.",
   },
+  {
+    slug: "freight-plus",
+    title: "Freight Plus — Freight Logistics",
+    course: "Suffolk University · ISOM 330",
+    oneliner:
+      "Team engagement analyzing shipment data for a Boston-area logistics firm under NDA, modeling how mileage, weight, ship type, delivery type, and time-to-cover drive freight pricing.",
+    tech: ["R", "Decision Trees", "Linear Regression"],
+    role: "High-value goods segment lead",
+    extended:
+      "I led the high-value goods segment of the engagement, building and cross-validating a classification decision tree pruned to 3 terminal nodes, and running a parallel linear regression that iterated between log and square-root transformations of price to satisfy model-fit assumptions. Both models were evaluated against a held-out test split. The underlying shipment data is under NDA, so no dataset or client name is shared here — this is a summary of the approach and my role, not the deliverable itself.",
+  },
+  {
+    slug: "lego-discovery-center",
+    title: "Lego Discovery Center Boston — Growth Strategy",
+    course: "Suffolk University · SBS-101",
+    oneliner:
+      "Team case study developing strategic solutions for the Lego Discovery Center Boston — membership retention, attendance patterns, and competitive positioning against industry benchmarks.",
+    tech: ["Market Research", "Competitive Analysis"],
+    role: "Team member",
+    extended:
+      "Working with a team, I helped analyze industry benchmarks and competitor offerings to recommend ways to increase annual pass sales and strengthen renewal rates — an early case-study exercise in translating attendance and retention data into a concrete growth strategy.",
+  },
 ];
 
 export default function MoreProjects() {
