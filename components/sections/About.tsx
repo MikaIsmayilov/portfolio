@@ -94,8 +94,9 @@ export default function About() {
           <div style={{ maxWidth: "620px" }}>
             <Reveal delay={0.1}>
               <p className="prose" style={{ marginBottom: "1.5rem", fontSize: "1.1875rem" }}>
-                I started in psychology — four years at Suffolk University
-                studying how people actually make decisions, graduating{" "}
+                I started in psychology — four years studying how people
+                actually make decisions, first at George Mason University and
+                then at Suffolk University, where I graduated{" "}
                 <em>magna cum laude</em>{" "}with a minor in business analytics.
                 Somewhere between my stats classes and my senior thesis, I
                 realized the questions I cared about were data questions.

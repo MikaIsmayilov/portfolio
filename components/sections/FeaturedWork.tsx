@@ -33,7 +33,7 @@ const studies: Study[] = [
   {
     slug: "aurelian",
     title: "Aurelian",
-    status: { label: "Private beta", kind: "wip" },
+    status: { label: "In development", kind: "wip" },
     role: "Solo build · 470+ commits",
     oneliner:
       "An AI stylist that knows your wardrobe. Photograph your clothes and it catalogs them, finds the gaps, plans weather-aware packing for trips, and answers style questions with your real closet as context.",

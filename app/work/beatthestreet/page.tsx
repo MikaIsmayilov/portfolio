@@ -114,7 +114,7 @@ export default function BeatTheStreet() {
       <Section title="What I found">
         <BulletList
           items={[
-            "60.9% test accuracy on the 2022–2024 holdout — a 13-percentage-point lift over the always-beat baseline.",
+            "60.9% test accuracy on the 2022–2024 holdout — a 13.1-percentage-point lift over the always-beat baseline.",
             "The strongest predictors were analyst estimate revision direction and magnitude, followed by recent price momentum and earnings quality (accruals).",
             "VADER sentiment on pre-announcement headlines added a small but consistent signal, most visible in the miss bucket.",
             "The model calibrates well on beat vs. miss but is less confident on the narrow 'meet' bucket — which reflects genuine difficulty in the data.",

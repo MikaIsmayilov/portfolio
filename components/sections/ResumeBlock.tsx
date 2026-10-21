@@ -6,15 +6,33 @@ const education = [
   {
     degree: "M.S. in Business Analytics",
     institution: "Boston University, Questrom School of Business",
-    period: "Jan 2027",
+    period: "Aug 2025 – Jan 2027",
     notes: ["3.2 GPA", "In progress"],
   },
   {
     degree: "B.S. in Psychology, Minor in Business Analytics",
     institution: "Suffolk University, Boston, MA",
-    period: "May 2025",
+    period: "Sep 2023 – May 2025",
     notes: ["3.7 GPA", "Magna Cum Laude", "Dean's List"],
   },
+  {
+    degree: "Undergraduate coursework, Psychology",
+    institution: "George Mason University, Fairfax, VA",
+    period: "Jan 2021 – May 2023",
+    notes: ["Delta Chi", "Transferred to Suffolk"],
+  },
+  {
+    degree: "High School Diploma",
+    institution: "Baku-Oxford School, Baku, Azerbaijan",
+    period: "Sep 2018 – May 2021",
+    notes: ["3.8 GPA", "High Honors"],
+  },
+];
+
+const certifications = [
+  { name: "Introduction to Statistics", issuer: "Stanford University", date: "Aug 2025" },
+  { name: "Python Data Structures", issuer: "University of Michigan", date: "Aug 2025" },
+  { name: "Programming for Everybody (Getting Started with Python)", issuer: "University of Michigan", date: "Aug 2025" },
 ];
 
 const experience = [
@@ -33,7 +51,7 @@ const experience = [
     title: "Data Analysis Intern",
     org: "Outfox Energy (Redfish Systems)",
     location: "Leicester, UK (Remote)",
-    period: "Jun 2026 – Jul 2026",
+    period: "Jun 2026 – Aug 2026",
     bullets: [
       "Automated recurring reporting for commercial and operations teams by building refreshable Power BI dashboards with DAX measures and Power Query transformations, replacing manual spreadsheet reporting.",
       "Supported credit-balance and arrears monitoring in line with Ofgem expectations, analyzing direct-debit levels against actual consumption to flag over- and under-set customer accounts.",
@@ -42,7 +60,7 @@ const experience = [
   },
   {
     title: "Sales Management Intern",
-    org: "NEP Engineering",
+    org: "Daikin Azerbaijan (NEP Engineering)",
     location: "Baku, Azerbaijan",
     period: "Jun 2025 – Aug 2025",
     bullets: [
@@ -57,9 +75,10 @@ const experience = [
     location: "Cambridge, MA",
     period: "Sep 2024 – Jun 2025",
     bullets: [
-      "Supported 50 Black-owned businesses through technical assistance and connections to funding, including Cambridge Savings Bank and the City of Cambridge.",
-      "Managed Equity Fund application cycle — reviewed 40 applications annually, developed individualized success plans with 10–15 grantees.",
+      "Supported 50+ Black-owned businesses through technical assistance and connections to funding, including Cambridge Savings Bank and the City of Cambridge.",
+      "Managed Equity Fund application cycle — reviewed 40+ applications annually, developed individualized success plans with 10–15 grantees.",
       "Created newsletters and campaigns that drove a 30% increase in digital engagement for CSBBN member businesses.",
+      "Cultivated partnerships across 5+ affiliate organizations, widening access to resources that address the operational and strategic needs of Black entrepreneurs.",
     ],
   },
   {
@@ -166,6 +185,25 @@ export default function ResumeBlock() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div style={{ marginTop: "3rem" }}>
+              <Label>Certifications</Label>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                {certifications.map((c) => (
+                  <div key={c.name}>
+                    <p
+                      className="display"
+                      style={{ fontSize: "1.0625rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.25rem" }}
+                    >
+                      {c.name}
+                    </p>
+                    <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)" }}>
+                      {c.issuer} · {c.date}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
 

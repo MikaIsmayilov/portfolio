@@ -9,7 +9,7 @@ import CaseStudyLayout, {
 export const metadata: Metadata = {
   title: "Aurelian — Mika Ismayilli",
   description:
-    "An AI stylist that knows your wardrobe. React + Supabase + Claude, with weather-aware packing, gap analysis, and Stripe billing. Solo build, private beta.",
+    "An AI stylist that knows your wardrobe. React + Supabase + Claude, with weather-aware packing, gap analysis, and Stripe billing. Solo build, in development.",
 };
 
 export default function Aurelian() {
@@ -17,7 +17,7 @@ export default function Aurelian() {
     <CaseStudyLayout
       title="Aurelian"
       oneliner="An AI stylist that actually knows your wardrobe. Photograph your clothes and it catalogs them, finds what's missing, plans what to pack for a trip, and answers style questions with your real closet as context."
-      badge="Private beta"
+      badge="In development"
       stats={[
         { value: "11", label: "Edge functions" },
         { value: "18", label: "DB migrations" },
