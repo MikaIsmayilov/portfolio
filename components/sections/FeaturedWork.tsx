@@ -5,6 +5,7 @@ import StudyBand from "@/components/StudyBand";
 import type { Study } from "@/components/StudyBand";
 import BaselineLift from "@/components/charts/BaselineLift";
 import RandomizationFlow from "@/components/charts/RandomizationFlow";
+import RequirementCoverage from "@/components/charts/RequirementCoverage";
 import WardrobeGrid from "@/components/charts/WardrobeGrid";
 
 const studies: Study[] = [
@@ -18,6 +19,17 @@ const studies: Study[] = [
     finding: "60.9% on a strict 2022–24 holdout · +13 pts over the always-beat baseline",
     tech: ["LightGBM", "SHAP", "FastAPI", "React", "Docker", "WRDS"],
     chart: <BaselineLift />,
+  },
+  {
+    slug: "job-agent",
+    title: "Job Agent",
+    status: { label: "Open source", kind: "team" },
+    role: "Solo rebuild · 46 commits",
+    oneliner:
+      "An AI job agent anyone can install by talking to Claude. It scores each posting on how many of its real requirements your resume covers, flags jobs you can't legally take, and tailors a one-page resume for the ones worth it.",
+    finding: "Keyword matching → requirement coverage · 123 tests · works for any user",
+    tech: ["Claude Code", "Next.js", "Cloudflare Workers", "D1", "TypeScript"],
+    chart: <RequirementCoverage />,
   },
   {
     slug: "scarcity-experiment",
@@ -62,14 +74,14 @@ export default function FeaturedWork() {
                   maxWidth: "640px",
                 }}
               >
-                Three studies, three kinds of question.
+                Four studies, four kinds of question.
               </h2>
             </div>
             <p
               className="prose"
               style={{ color: "var(--paper-dim)", maxWidth: "380px", fontSize: "1rem" }}
             >
-              A prediction problem, a causal one, and a product. Each chart on
+              A prediction problem, a tool people install, a causal question, and a product. Each chart on
               the right is drawn from the project&apos;s real numbers.
             </p>
           </div>
