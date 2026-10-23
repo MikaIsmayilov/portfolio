@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { useCountUp } from "@/components/charts/useCountUp";
 
@@ -44,7 +44,7 @@ export default function RequirementCoverage() {
       <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
         {LINES.map((l, i) => {
           const color =
-            l.state === "met" ? "var(--ember)" : l.state === "gap" ? "var(--cool)" : "var(--paper-faint)";
+            l.state === "met" ? "var(--accent)" : l.state === "gap" ? "var(--support)" : "var(--paper-faint)";
           const mark = l.state === "met" ? "✓" : l.state === "gap" ? "gap" : "skip";
           return (
             <motion.div
@@ -96,7 +96,7 @@ export default function RequirementCoverage() {
         <span>3 OF 3 REQUIRED COVERED · 1 GAP</span>
         <span>
           FIT{" "}
-          <span style={{ color: "var(--ember)", fontSize: "1.25rem", letterSpacing: "0" }}>
+          <span style={{ color: "var(--accent)", fontSize: "1.25rem", letterSpacing: "0" }}>
             {Math.round(score)}
           </span>
         </span>

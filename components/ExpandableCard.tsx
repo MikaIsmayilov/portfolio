@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "motion/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
@@ -21,13 +21,15 @@ export type ExpandableProject = {
 export default function ExpandableCard({
   project,
   index,
+  defaultOpen = false,
 }: {
   project: ExpandableProject;
   index: number;
+  defaultOpen?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const panelId = `${project.slug}-panel`;
 
   return (
@@ -41,7 +43,7 @@ export default function ExpandableCard({
         gridColumn: open ? "1 / -1" : undefined,
         backgroundColor: open ? "var(--ground-2)" : "transparent",
         border: "1px solid",
-        borderColor: open ? "var(--cool-dim)" : "var(--rule)",
+        borderColor: open ? "var(--support-dim)" : "var(--rule)",
         transition: "border-color 220ms var(--ease-out), background-color 220ms",
       }}
       className="xcard"
@@ -106,7 +108,7 @@ export default function ExpandableCard({
 
         <motion.span
           aria-hidden="true"
-          animate={{ rotate: open ? 45 : 0, color: open ? "#F5B342" : "#6B7292" }}
+          animate={{ rotate: open ? 45 : 0, color: open ? "#C4B5FD" : "#8A84A6" }}
           transition={{ duration: 0.25 }}
           className="mono"
           style={{ fontSize: "1.375rem", lineHeight: 1, marginTop: "0.1rem" }}
@@ -197,7 +199,7 @@ export default function ExpandableCard({
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-ember"
+                    className="btn-accent"
                     style={{ padding: "0.6rem 1rem" }}
                   >
                     {project.demo2 ? "Dashboard 1 ↗" : "View ↗"}
@@ -208,7 +210,7 @@ export default function ExpandableCard({
                     href={project.demo2}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-ember"
+                    className="btn-accent"
                     style={{ padding: "0.6rem 1rem" }}
                   >
                     Dashboard 2 ↗

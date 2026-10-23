@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 /* ─── Design tokens ─────────────────────────────────────
-   Night plot. Deep ink-navy ground, warm paper text.
+   Lavender Dusk. Plum-ink ground, lavender-tinted paper text.
    Two accents that mean something:
-     --cool  = baseline / control / data
-     --ember = effect / lift / result / the thing to look at
+     --support = baseline / control / context
+     --accent  = effect / lift / result / the thing to look at
    ──────────────────────────────────────────────────────── */
 :root {
   color-scheme: dark;
 
-  --ground:      #090D1E;
-  --ground-2:    #0F1430;
-  --ground-3:    #171D3F;
-  --paper:       #F2EDE3;
-  --paper-dim:   #A9AEC5;
-  --paper-faint: #7C83A3;
-  --rule:        rgba(242, 237, 227, 0.09);
-  --rule-strong: rgba(242, 237, 227, 0.20);
-  --cool:        #7C93FF;
-  --cool-dim:    rgba(124, 147, 255, 0.30);
-  --ember:       #F5B342;
-  --ember-dim:   rgba(245, 179, 66, 0.22);
+  --ground:      #13111F;
+  --ground-2:    #1B1830;
+  --ground-3:    #252140;
+  --paper:       #F3F0FA;
+  --paper-dim:   #B3ADC9;
+  --paper-faint: #8A84A6;
+  --rule:        rgba(243, 240, 250, 0.08);
+  --rule-strong: rgba(243, 240, 250, 0.18);
+  --support:     #FFB59A;
+  --support-dim: rgba(255, 181, 154, 0.30);
+  --accent:      #C4B5FD;
+  --accent-dim:  rgba(196, 181, 253, 0.22);
 
   --font-display: var(--font-bricolage);
   --font-body:    var(--font-source-serif);
@@ -34,8 +34,8 @@
   --color-ground-2:   var(--ground-2);
   --color-paper:      var(--paper);
   --color-paper-dim:  var(--paper-dim);
-  --color-cool:       var(--cool);
-  --color-ember:      var(--ember);
+  --color-support:       var(--support);
+  --color-accent:      var(--accent);
 
   --font-sans:    var(--font-source-serif);
   --font-display: var(--font-bricolage);
@@ -63,12 +63,12 @@ body {
 }
 
 ::selection {
-  background-color: var(--ember);
+  background-color: var(--accent);
   color: var(--ground);
 }
 
 :focus-visible {
-  outline: 2px solid var(--cool);
+  outline: 2px solid var(--support);
   outline-offset: 3px;
 }
 
@@ -137,7 +137,7 @@ img { max-width: 100%; display: block; }
 .prose strong { font-weight: 600; color: var(--paper); }
 
 /* ─── Buttons ────────────────────────────────────────── */
-.btn-ember,
+.btn-accent,
 .btn-line {
   display: inline-flex;
   align-items: center;
@@ -157,15 +157,15 @@ img { max-width: 100%; display: block; }
               box-shadow 220ms var(--ease-out);
 }
 
-.btn-ember {
-  background-color: var(--ember);
+.btn-accent {
+  background-color: var(--accent);
   color: var(--ground);
-  border-color: var(--ember);
+  border-color: var(--accent);
 }
-.btn-ember:hover {
-  background-color: #FFC65E;
+.btn-accent:hover {
+  background-color: #D6CBFF;
   transform: translateY(-1px);
-  box-shadow: 0 10px 30px -8px var(--ember-dim), 0 0 0 1px var(--ember);
+  box-shadow: 0 10px 30px -8px var(--accent-dim), 0 0 0 1px var(--accent);
 }
 
 .btn-line {
@@ -178,6 +178,27 @@ img { max-width: 100%; display: block; }
   transform: translateY(-1px);
 }
 
+/* Rounded outline button that sits beside the discover-button */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 58px;
+  padding: 0 1.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--rule-strong);
+  background-color: transparent;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--paper);
+  transition: border-color 220ms var(--ease-out), background-color 220ms var(--ease-out);
+}
+.btn-pill:hover {
+  border-color: var(--accent);
+  background-color: var(--accent-dim);
+}
+
 /* ─── Pills ──────────────────────────────────────────── */
 .pill {
   display: inline-flex;
@@ -187,7 +208,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.04em;
   color: var(--paper-dim);
   border: 1px solid var(--rule);
-  background-color: rgba(242, 237, 227, 0.025);
+  background-color: rgba(243, 240, 250, 0.025);
   padding: 0.25rem 0.6rem;
   white-space: nowrap;
 }
@@ -204,7 +225,7 @@ img { max-width: 100%; display: block; }
   bottom: -3px;
   width: 100%;
   height: 1px;
-  background-color: var(--ember);
+  background-color: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 260ms var(--ease-out);
@@ -232,14 +253,14 @@ img { max-width: 100%; display: block; }
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--ember);
-  box-shadow: 0 0 0 0 var(--ember-dim);
+  background-color: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent-dim);
   animation: dot-pulse 2.2s ease-out infinite;
 }
 @keyframes dot-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(245, 179, 66, 0.55); }
-  70%  { box-shadow: 0 0 0 8px rgba(245, 179, 66, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(245, 179, 66, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(196, 181, 253, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(196, 181, 253, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(196, 181, 253, 0); }
 }
 
 /* ─── Form fields ────────────────────────────────────── */
@@ -256,7 +277,7 @@ img { max-width: 100%; display: block; }
 }
 .field::placeholder { color: var(--paper-faint); }
 .field:focus {
-  border-color: var(--cool);
+  border-color: var(--support);
   background-color: var(--ground-3);
 }
 

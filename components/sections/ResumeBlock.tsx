@@ -1,6 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import type { ReactNode } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import Reveal from "@/components/Reveal";
+import { Timeline } from "@/components/ui/timeline";
 
 const education = [
   {
@@ -109,21 +113,83 @@ const skills = {
   "Spoken languages": ["English (native)", "Russian (native)", "Azerbaijani (proficient)", "Turkish (proficient)", "Spanish (intermediate)"],
 };
 
-function Label({ children }: { children: React.ReactNode }) {
+// One line per role or school, scannable at a glance; full detail lives in
+// the drawers below.
+const summary: { key: string; when: string; title: string; org: string; kind: "Work" | "School"; current?: boolean }[] = [
+  { key: "outfox", when: "2026", title: "Data Analysis Intern", org: "Outfox Energy · Power BI, SQL Server, pandas", kind: "Work" },
+  { key: "bu", when: "2025 – now", title: "M.S. Business Analytics + Admissions Ambassador", org: "Boston University, Questrom", kind: "School", current: true },
+  { key: "daikin", when: "2025", title: "Sales Management Intern", org: "Daikin Azerbaijan · +30% average contract value", kind: "Work" },
+  { key: "sbn", when: "2024 – 25", title: "Business Support Coordinator & Intern", org: "Sustainable Business Network of MA · 50+ businesses supported", kind: "Work" },
+  { key: "clf", when: "2024", title: "Research Intern", org: "Cambridge Local First", kind: "Work" },
+  { key: "suffolk", when: "2021 – 25", title: "B.S. Psychology, Minor in Business Analytics", org: "Suffolk University · Magna Cum Laude · after George Mason", kind: "School" },
+];
+
+const skillCount = Object.entries(skills)
+  .filter(([category]) => category !== "Spoken languages")
+  .reduce((n, [, items]) => n + items.length, 0);
+
+function Drawer({ title, count, children }: { title: string; count: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const id = `drawer-${title.toLowerCase().replace(/\s+/g, "-")}`;
   return (
-    <h3
+    <div style={{ borderBottom: "1px solid var(--rule)" }}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={id}
+        className="drawer-btn"
+      >
+        <span style={{ display: "flex", alignItems: "baseline", gap: "0.85rem", flexWrap: "wrap" }}>
+          <span className="display" style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.01em" }}>
+            {title}
+          </span>
+          <span className="eyebrow">{count}</span>
+        </span>
+        <motion.span
+          aria-hidden="true"
+          animate={{ rotate: open ? 45 : 0 }}
+          transition={{ duration: 0.25 }}
+          className="drawer-plus"
+        >
+          +
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            id={id}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            style={{ overflow: "hidden" }}
+          >
+            <div style={{ padding: "0.5rem 0.25rem 2rem" }}>{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function Kind({ kind }: { kind: "Work" | "School" }) {
+  const work = kind === "Work";
+  return (
+    <span
       className="eyebrow"
       style={{
-        color: "var(--paper-dim)",
-        borderBottom: "1px solid var(--rule)",
-        paddingBottom: "0.75rem",
-        marginBottom: "1.5rem",
-        fontFamily: "var(--font-mono)",
-        lineHeight: 1,
+        fontSize: "0.625rem",
+        padding: "0.15rem 0.5rem",
+        borderRadius: 999,
+        marginLeft: "0.6rem",
+        verticalAlign: "middle",
+        color: work ? "var(--accent)" : "var(--support)",
+        backgroundColor: work ? "var(--accent-dim)" : "var(--support-dim)",
       }}
     >
-      {children}
-    </h3>
+      {kind}
+    </span>
   );
 }
 
@@ -145,57 +211,111 @@ export default function ResumeBlock() {
                   lineHeight: 1.0,
                 }}
               >
-                At a glance
+                The path so far.
               </h2>
             </div>
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-line">
-              Download PDF ↗
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-pill">
+              Download PDF <span aria-hidden="true">↗</span>
             </a>
           </div>
         </Reveal>
 
-        {/* Education + Skills */}
-        <div
-          className="resume-top"
-          style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3.5rem", marginBottom: "4.5rem" }}
-        >
-          <Reveal delay={0.05}>
-            <Label>Education</Label>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
-              {education.map((e) => (
-                <div key={e.degree}>
-                  <p
-                    className="display"
-                    style={{ fontSize: "1.1875rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.25rem" }}
-                  >
-                    {e.degree}
+        <div className="resume-grid">
+          <Timeline
+            data={summary.map((e) => ({
+              key: e.key,
+              when: e.when,
+              current: e.current,
+              content: (
+                <>
+                  <p className="display" style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.01em", lineHeight: 1.25 }}>
+                    {e.title}
+                    <Kind kind={e.kind} />
                   </p>
-                  <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)", marginBottom: "0.6rem" }}>
-                    {e.institution}
+                  <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)", marginTop: "0.2rem" }}>
+                    {e.org}
                   </p>
-                  <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                    <span className="pill" style={{ color: "var(--ember)", borderColor: "var(--ember-dim)" }}>
-                      {e.period}
-                    </span>
-                    {e.notes.map((n) => (
-                      <span key={n} className="pill">
-                        {n}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+                </>
+              ),
+            }))}
+          />
 
-            <div style={{ marginTop: "3rem" }}>
-              <Label>Certifications</Label>
+          <div style={{ borderTop: "1px solid var(--rule)" }}>
+            <Drawer title="Experience details" count={`${experience.length} roles`}>
+              <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "2rem" }}>
+                {experience.map((e) => (
+                  <li key={e.title + e.period}>
+                    <p className="mono" style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: e.current ? "var(--accent)" : "var(--support)", marginBottom: "0.35rem" }}>
+                      {e.period}
+                    </p>
+                    <p className="display" style={{ fontSize: "1.125rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.2rem" }}>
+                      {e.title}
+                    </p>
+                    <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)", marginBottom: "0.75rem" }}>
+                      {e.org} · {e.location}
+                    </p>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                      {e.bullets.map((b) => (
+                        <li key={b} className="prose" style={{ display: "flex", gap: "0.7rem", fontSize: "0.9375rem", lineHeight: 1.6 }}>
+                          <span aria-hidden="true" style={{ color: "var(--accent)", flexShrink: 0 }}>—</span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ol>
+            </Drawer>
+
+            <Drawer title="Skills" count={`${skillCount} tools · ${skills["Spoken languages"].length} languages`}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                {Object.entries(skills).map(([category, items]) => (
+                  <div key={category}>
+                    <p className="eyebrow" style={{ marginBottom: "0.5rem", letterSpacing: "0.1em" }}>
+                      {category}
+                    </p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                      {items.map((item) => (
+                        <span key={item} className="pill">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Drawer>
+
+            <Drawer title="Education details" count={`${education.length} schools`}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                {education.map((e) => (
+                  <div key={e.degree}>
+                    <p className="display" style={{ fontSize: "1.125rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.25rem" }}>
+                      {e.degree}
+                    </p>
+                    <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)", marginBottom: "0.6rem" }}>
+                      {e.institution}
+                    </p>
+                    <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+                      <span className="pill" style={{ color: "var(--accent)", borderColor: "var(--accent-dim)" }}>
+                        {e.period}
+                      </span>
+                      {e.notes.map((n) => (
+                        <span key={n} className="pill">
+                          {n}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Drawer>
+
+            <Drawer title="Certifications" count={`${certifications.length}`}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                 {certifications.map((c) => (
                   <div key={c.name}>
-                    <p
-                      className="display"
-                      style={{ fontSize: "1.0625rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.25rem" }}
-                    >
+                    <p className="display" style={{ fontSize: "1.0625rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.25rem" }}>
                       {c.name}
                     </p>
                     <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)" }}>
@@ -204,113 +324,25 @@ export default function ResumeBlock() {
                   </div>
                 ))}
               </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <Label>Skills</Label>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-              {Object.entries(skills).map(([category, items]) => (
-                <div key={category}>
-                  <p className="eyebrow" style={{ marginBottom: "0.5rem", letterSpacing: "0.1em" }}>
-                    {category}
-                  </p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                    {items.map((item) => (
-                      <span key={item} className="pill">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+            </Drawer>
+          </div>
         </div>
-
-        {/* Experience — a real timeline */}
-        <Reveal delay={0.1}>
-          <Label>Experience</Label>
-        </Reveal>
-        <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-          {experience.map((e, i) => (
-            <Reveal key={e.title + e.period} as="li" delay={0.04 * i}>
-              <div className="tl-row">
-                <div className="tl-date">
-                  <span
-                    className="mono"
-                    style={{
-                      fontSize: "0.75rem",
-                      letterSpacing: "0.06em",
-                      color: e.current ? "var(--ember)" : "var(--paper-dim)",
-                    }}
-                  >
-                    {e.period}
-                  </span>
-                </div>
-                <div className="tl-body">
-                  <span
-                    aria-hidden="true"
-                    className="tl-node"
-                    style={{
-                      backgroundColor: e.current ? "var(--ember)" : "var(--ground)",
-                      borderColor: e.current ? "var(--ember)" : "var(--cool)",
-                      boxShadow: e.current ? "0 0 0 4px var(--ember-dim)" : "none",
-                    }}
-                  />
-                  <p
-                    className="display"
-                    style={{ fontSize: "1.1875rem", fontWeight: 600, letterSpacing: "-0.01em", marginBottom: "0.2rem" }}
-                  >
-                    {e.title}
-                  </p>
-                  <p className="prose" style={{ fontSize: "0.9375rem", color: "var(--paper-dim)", marginBottom: "0.9rem" }}>
-                    {e.org} · {e.location}
-                  </p>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem" }}>
-                    {e.bullets.map((b) => (
-                      <li
-                        key={b}
-                        className="prose"
-                        style={{ display: "flex", gap: "0.7rem", fontSize: "0.9875rem", lineHeight: 1.6, maxWidth: "720px" }}
-                      >
-                        <span aria-hidden="true" style={{ color: "var(--ember)", flexShrink: 0 }}>—</span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </ol>
       </div>
 
       <style>{`
-        .tl-row {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 0.4rem;
+        .resume-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start; }
+        .drawer-btn {
+          display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 1rem;
+          padding: 1.25rem 0.25rem; background: none; border: none; cursor: pointer; color: inherit; text-align: left;
         }
-        .tl-body {
-          position: relative;
-          border-left: 1px solid var(--rule-strong);
-          padding: 0 0 2.75rem 1.75rem;
+        .drawer-plus {
+          display: grid; place-items: center; flex: none; width: 2rem; height: 2rem; border-radius: 50%;
+          border: 1px solid var(--rule-strong); color: var(--accent); font-family: var(--font-mono), monospace; font-size: 1.1rem;
+          transition: border-color 220ms var(--ease-out);
         }
-        .tl-node {
-          position: absolute;
-          left: -5px;
-          top: 0.45rem;
-          width: 9px;
-          height: 9px;
-          border-radius: 50%;
-          border: 1px solid;
-        }
-        .tl-date { padding-top: 0.2rem; padding-left: 1.75rem; }
-        @media (min-width: 760px) {
-          .resume-top { grid-template-columns: 5fr 7fr !important; gap: 5rem !important; }
-          .tl-row { grid-template-columns: 200px 1fr; gap: 0; }
-          .tl-date { padding-left: 0; }
+        .drawer-btn:hover .drawer-plus { border-color: var(--accent); }
+        @media (min-width: 960px) {
+          .resume-grid { grid-template-columns: 6fr 5fr; gap: 5rem; }
         }
       `}</style>
     </section>

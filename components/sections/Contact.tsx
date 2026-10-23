@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Reveal from "@/components/Reveal";
+import { DiscoverButton } from "@/components/ui/discover-button";
 
-const contactLinks = [
-  { label: "Email", value: "mikaism@bu.edu", href: "mailto:mikaism@bu.edu" },
-  { label: "GitHub", value: "MikaIsmayilov", href: "https://github.com/MikaIsmayilov" },
-  { label: "LinkedIn", value: "muslumismayilli", href: "https://www.linkedin.com/in/muslumismayilli/" },
+const socialLinks = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/muslumismayilli/" },
+  { label: "GitHub", href: "https://github.com/MikaIsmayilov" },
 ];
 
 export default function Contact() {
@@ -35,10 +35,27 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section" style={{ paddingBottom: "clamp(5rem, 10vw, 8rem)" }}>
-      <div className="wrap">
+    <section
+      id="contact"
+      className="section"
+      style={{ position: "relative", overflow: "hidden", paddingBottom: "clamp(5rem, 10vw, 8rem)" }}
+    >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "32%",
+          width: "min(900px, 120vw)",
+          height: "420px",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(ellipse, rgba(196,181,253,0.18), transparent 65%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div className="wrap" style={{ position: "relative", textAlign: "center" }}>
         <Reveal>
-          <p className="eyebrow" style={{ marginBottom: "1rem" }}>
+          <p className="eyebrow" style={{ marginBottom: "1.5rem" }}>
             Contact
           </p>
         </Reveal>
@@ -46,56 +63,42 @@ export default function Contact() {
           <h2
             className="display"
             style={{
-              fontSize: "clamp(3rem, 8vw, 6.5rem)",
+              fontSize: "clamp(3.25rem, 10vw, 8rem)",
               fontWeight: 800,
-              lineHeight: 0.95,
-              letterSpacing: "-0.035em",
-              marginBottom: "1.25rem",
-              fontVariationSettings: '"opsz" 96, "wdth" 88',
+              lineHeight: 0.9,
+              letterSpacing: "-0.04em",
+              marginBottom: "1.5rem",
             }}
           >
-            Say hi<span style={{ color: "var(--ember)" }}>.</span>
+            Let&apos;s{" "}
+            <em style={{ fontFamily: "var(--font-body)", fontWeight: 400, color: "var(--accent)" }}>talk</em>
+            <br />
+            data.
           </h2>
         </Reveal>
         <Reveal delay={0.08}>
-          <p className="prose" style={{ color: "var(--paper-dim)", maxWidth: "460px", marginBottom: "3.5rem" }}>
+          <p className="prose" style={{ color: "var(--paper-dim)", maxWidth: "460px", margin: "0 auto 2.5rem" }}>
             I&apos;m looking for data science, ML, and analytics roles. Open to
             conversation — even if you&apos;re just exploring.
           </p>
         </Reveal>
+        <Reveal delay={0.1}>
+          <div style={{ display: "flex", gap: "0.85rem", flexWrap: "wrap", justifyContent: "center", marginBottom: "4.5rem" }}>
+            <DiscoverButton label="mikaism@bu.edu" href="mailto:mikaism@bu.edu" external />
+            {socialLinks.map(({ label, href }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="btn-pill">
+                {label} <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        </Reveal>
 
-        <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3.5rem" }}>
-          <Reveal delay={0.1}>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, borderTop: "1px solid var(--rule)" }}>
-              {contactLinks.map(({ label, value, href }) => (
-                <li key={label} style={{ borderBottom: "1px solid var(--rule)" }}>
-                  <a
-                    href={href}
-                    target={href.startsWith("http") ? "_blank" : undefined}
-                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="contact-row"
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "88px 1fr auto",
-                      alignItems: "center",
-                      gap: "1rem",
-                      padding: "1.25rem 0.25rem",
-                      transition: "padding-left 220ms var(--ease-out)",
-                    }}
-                  >
-                    <span className="eyebrow">{label}</span>
-                    <span className="display" style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.01em" }}>
-                      {value}
-                    </span>
-                    <span aria-hidden="true" className="mono contact-arrow" style={{ color: "var(--paper-faint)", transition: "transform 220ms var(--ease-out), color 220ms" }}>
-                      {href.startsWith("http") ? "↗" : "→"}
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+        <div style={{ maxWidth: "640px", margin: "0 auto", textAlign: "left" }}>
+          <Reveal delay={0.12}>
+            <p className="eyebrow" style={{ marginBottom: "1.25rem", textAlign: "center" }}>
+              Or send a message
+            </p>
           </Reveal>
-
           <Reveal delay={0.12}>
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <div className="contact-two" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
@@ -120,11 +123,11 @@ export default function Contact() {
               </div>
 
               {status === "sent" ? (
-                <p className="mono" style={{ color: "var(--ember)", fontSize: "0.8125rem", letterSpacing: "0.06em" }}>
+                <p className="mono" style={{ color: "var(--accent)", fontSize: "0.8125rem", letterSpacing: "0.06em" }}>
                   Message sent — I&apos;ll be in touch.
                 </p>
               ) : (
-                <button type="submit" className="btn-ember" disabled={status === "sending"} style={{ alignSelf: "flex-start" }}>
+                <button type="submit" className="btn-pill" disabled={status === "sending"} style={{ alignSelf: "flex-start", cursor: "pointer" }}>
                   {status === "sending" ? "Sending…" : "Send message"}
                 </button>
               )}
@@ -140,13 +143,8 @@ export default function Contact() {
       </div>
 
       <style>{`
-        .contact-row:hover { padding-left: 0.75rem !important; }
-        .contact-row:hover .contact-arrow { transform: translateX(4px); color: var(--ember); }
         @media (min-width: 560px) {
           .contact-two { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media (min-width: 860px) {
-          .contact-grid { grid-template-columns: 6fr 6fr !important; gap: 5rem !important; }
         }
       `}</style>
     </section>

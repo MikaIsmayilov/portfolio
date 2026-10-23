@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { useCountUp } from "./useCountUp";
 
@@ -26,8 +26,8 @@ export default function BaselineLift() {
   const x = (v: number) => left + (v / 100) * track;
 
   const rows = [
-    { y: 62, label: "Always-beat baseline", value: base, target: BASELINE, color: "var(--cool)" },
-    { y: 128, label: "LightGBM · 2022–24 holdout", value: model, target: MODEL, color: "var(--ember)" },
+    { y: 62, label: "Always-beat baseline", value: base, target: BASELINE, color: "var(--support)" },
+    { y: 128, label: "LightGBM · 2022–24 holdout", value: model, target: MODEL, color: "var(--accent)" },
   ];
 
   return (
@@ -57,7 +57,7 @@ export default function BaselineLift() {
           <text x={left} y={r.y - 12} className="mono" fill="var(--paper-dim)" fontSize="9.5" letterSpacing="0.6">
             {r.label}
           </text>
-          <rect x={left} y={r.y} width={track} height={16} fill="rgba(242,237,227,0.04)" />
+          <rect x={left} y={r.y} width={track} height={16} fill="rgba(243,240,250,0.04)" />
           <motion.rect
             x={left}
             y={r.y}
@@ -91,19 +91,19 @@ export default function BaselineLift() {
           x2={x(BASELINE)}
           y1={54}
           y2={158}
-          stroke="var(--cool)"
+          stroke="var(--support)"
           strokeWidth="1"
           strokeDasharray="2 3"
           opacity={0.7}
         />
-        <line x1={x(BASELINE)} x2={x(MODEL)} y1={166} y2={166} stroke="var(--ember)" strokeWidth="1" />
-        <line x1={x(MODEL)} x2={x(MODEL)} y1={162} y2={170} stroke="var(--ember)" strokeWidth="1" />
+        <line x1={x(BASELINE)} x2={x(MODEL)} y1={166} y2={166} stroke="var(--accent)" strokeWidth="1" />
+        <line x1={x(MODEL)} x2={x(MODEL)} y1={162} y2={170} stroke="var(--accent)" strokeWidth="1" />
         <text
           x={(x(BASELINE) + x(MODEL)) / 2}
           y={182}
           textAnchor="middle"
           className="mono"
-          fill="var(--ember)"
+          fill="var(--accent)"
           fontSize="10"
           letterSpacing="1"
         >

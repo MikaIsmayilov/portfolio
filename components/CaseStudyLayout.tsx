@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
@@ -82,7 +82,7 @@ export default function CaseStudyLayout({
               >
                 <span
                   className="eyebrow"
-                  style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", color: live ? "var(--ember)" : "var(--cool)" }}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", color: live ? "var(--accent)" : "var(--support)" }}
                 >
                   {live && <span className="dot-live" />}
                   {badge}
@@ -134,7 +134,7 @@ export default function CaseStudyLayout({
             >
               {stats.map((s, i) => (
                 <div key={s.label} style={{ minWidth: "120px" }}>
-                  <div className="display" style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--ember)", letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "0.4rem", fontVariantNumeric: "tabular-nums" }}>
+                  <div className="display" style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--accent)", letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "0.4rem", fontVariantNumeric: "tabular-nums" }}>
                     <StatValue value={s.value} active={statsIn} delay={i * 120} />
                   </div>
                   <div className="eyebrow">{s.label}</div>
@@ -166,7 +166,7 @@ export default function CaseStudyLayout({
               <style>{`@media (max-width: 640px) { .cs-divider { display: none; } }`}</style>
 
               {demo && (
-                <a href={demo} target="_blank" rel="noopener noreferrer" className="btn-ember" style={{ padding: "0.6rem 1rem" }}>
+                <a href={demo} target="_blank" rel="noopener noreferrer" className="btn-accent" style={{ padding: "0.6rem 1rem" }}>
                   {demoLabel} ↗
                 </a>
               )}
@@ -257,8 +257,8 @@ export function Figure({
             left: 8,
             width: 12,
             height: 12,
-            borderTop: "1px solid var(--ember)",
-            borderLeft: "1px solid var(--ember)",
+            borderTop: "1px solid var(--accent)",
+            borderLeft: "1px solid var(--accent)",
             zIndex: 1,
           }}
         />
@@ -284,7 +284,7 @@ export function BulletList({ items }: { items: string[] }) {
     <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1.1rem 0", display: "flex", flexDirection: "column", gap: "0.65rem" }}>
       {items.map((item) => (
         <li key={item} className="prose" style={{ display: "flex", gap: "0.8rem", fontSize: "1.125rem", lineHeight: 1.6, maxWidth: "700px" }}>
-          <span aria-hidden="true" style={{ color: "var(--ember)", flexShrink: 0 }}>—</span>
+          <span aria-hidden="true" style={{ color: "var(--accent)", flexShrink: 0 }}>—</span>
           <span>{item}</span>
         </li>
       ))}

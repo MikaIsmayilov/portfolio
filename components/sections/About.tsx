@@ -44,8 +44,8 @@ export default function About() {
                       left: 10,
                       width: 14,
                       height: 14,
-                      borderTop: "1px solid var(--ember)",
-                      borderLeft: "1px solid var(--ember)",
+                      borderTop: "1px solid var(--accent)",
+                      borderLeft: "1px solid var(--accent)",
                       zIndex: 2,
                     }}
                   />
@@ -85,7 +85,7 @@ export default function About() {
                 }}
               >
                 Psychology taught me to ask the right questions.{" "}
-                <span style={{ color: "var(--ember)" }}>Data science helps me answer them.</span>
+                <span style={{ color: "var(--accent)" }}>Data science helps me answer them.</span>
               </h2>
             </Reveal>
           </div>

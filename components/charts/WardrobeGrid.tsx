@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
 /**
@@ -37,7 +37,7 @@ export default function WardrobeGrid() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 1.5, duration: 0.4 }}
-          style={{ color: "var(--ember)" }}
+          style={{ color: "var(--accent)" }}
         >
           OCCASION: DINNER → 3 PICKS
         </motion.span>
@@ -62,7 +62,7 @@ export default function WardrobeGrid() {
                       opacity: 1,
                       scale: 1,
                       boxShadow: picked
-                        ? "0 0 0 1.5px #F5B342, 0 0 14px rgba(245,179,66,0.45)"
+                        ? "0 0 0 1.5px #C4B5FD, 0 0 14px rgba(196,181,253,0.45)"
                         : "0 0 0 0px rgba(0,0,0,0)",
                     }
                   : {}
@@ -76,7 +76,7 @@ export default function WardrobeGrid() {
                 aspectRatio: "1 / 1",
                 backgroundColor: c,
                 borderRadius: "2px",
-                border: "1px solid rgba(242,237,227,0.06)",
+                border: "1px solid rgba(243,240,250,0.06)",
               }}
             />
           );
