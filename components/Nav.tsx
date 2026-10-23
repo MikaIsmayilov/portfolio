@@ -12,6 +12,7 @@ const links = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -19,6 +20,15 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  const solid = scrolled || menuOpen;
 
   return (
     <header
@@ -28,10 +38,10 @@ export default function Nav() {
         left: 0,
         right: 0,
         zIndex: 100,
-        backgroundColor: scrolled ? "rgba(19, 17, 31, 0.72)" : "transparent",
-        backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
-        borderBottom: `1px solid ${scrolled ? "var(--rule)" : "transparent"}`,
+        backgroundColor: solid ? "rgba(19, 17, 31, 0.92)" : "transparent",
+        backdropFilter: solid ? "blur(14px) saturate(140%)" : "none",
+        WebkitBackdropFilter: solid ? "blur(14px) saturate(140%)" : "none",
+        borderBottom: `1px solid ${solid ? "var(--rule)" : "transparent"}`,
         transition:
           "background-color 320ms ease, border-color 320ms ease, backdrop-filter 320ms ease",
       }}
@@ -73,6 +83,7 @@ export default function Nav() {
         </Link>
 
         <div
+          className="nav-links"
           style={{
             display: "flex",
             alignItems: "center",
@@ -90,7 +101,55 @@ export default function Nav() {
             </Link>
           ))}
         </div>
+
+        <button
+          type="button"
+          className="nav-toggle eyebrow"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          {menuOpen ? "Close" : "Menu"}
+        </button>
       </nav>
+
+      {menuOpen && (
+        <div id="mobile-menu" className="wrap nav-menu">
+          {links.map(({ href, label }) => (
+            <Link key={label} href={href} className="display" onClick={() => setMenuOpen(false)}>
+              {label}
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <style>{`
+        .nav-toggle {
+          display: none;
+          padding: 0.6rem 1rem;
+          border-radius: 999px;
+          border: 1px solid var(--rule-strong);
+          background: none;
+          color: var(--paper);
+          cursor: pointer;
+        }
+        .nav-menu { display: flex; flex-direction: column; padding-bottom: 1.25rem; }
+        .nav-menu a {
+          padding: 0.85rem 0;
+          border-top: 1px solid var(--rule);
+          font-size: 1.5rem;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          color: var(--paper);
+        }
+        @media (max-width: 639px) {
+          .nav-links { display: none !important; }
+          .nav-toggle { display: inline-flex; }
+        }
+        @media (min-width: 640px) {
+          .nav-menu { display: none; }
+        }
+      `}</style>
     </header>
   );
 }
