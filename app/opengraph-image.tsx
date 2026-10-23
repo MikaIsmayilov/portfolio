@@ -1,25 +1,22 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
-export const runtime = "edge";
 export const alt = "Mika Ismayilli — Data Scientist";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OGImage() {
-  // A tiny deterministic scatter with a fitted line, echoing the site's hero.
-  const pts: { x: number; y: number; ember: boolean }[] = [];
-  let seed = 7;
-  const rnd = () => {
-    seed = (seed * 9301 + 49297) % 233280;
-    return seed / 233280;
-  };
-  for (let i = 0; i < 90; i++) {
-    const u = rnd();
-    const ember = i % 9 === 0;
-    const noise = (rnd() - 0.5) * 0.28;
-    const yData = 0.15 + 0.7 * u + noise + (ember ? 0.16 : 0);
-    pts.push({ x: 640 + u * 500, y: 560 - yData * 470, ember });
-  }
+// Mirrors the hero: same headline, type and orb. The orb is a pre-rendered
+// PNG because the OG renderer can't draw conic gradients, masks or blur.
+export default async function OGImage() {
+  const [display, mono, orb] = await Promise.all([
+    readFile(join(process.cwd(), "assets/BricolageGrotesque-ExtraBold-SemiCondensed.ttf")),
+    readFile(join(process.cwd(), "assets/IBMPlexMono-Medium.ttf")),
+    readFile(join(process.cwd(), "assets/og-orb.png")),
+  ]);
+  const orbSrc = `data:image/png;base64,${orb.toString("base64")}`;
+
+  const line = { display: "flex", fontSize: 86, lineHeight: 0.95, letterSpacing: -3, color: "#F3F0FA" } as const;
 
   return new ImageResponse(
     (
@@ -28,90 +25,62 @@ export default function OGImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          backgroundColor: "#13111F",
           position: "relative",
-          fontFamily: "sans-serif",
+          backgroundColor: "#13111F",
+          fontFamily: "Bricolage",
         }}
       >
-        <svg
-          width="1200"
-          height="630"
-          viewBox="0 0 1200 630"
-          style={{ position: "absolute", top: 0, left: 0 }}
-        >
-          <line x1="640" y1="500" x2="1150" y2="130" stroke="rgba(242,237,227,0.35)" strokeWidth="1.5" />
-          {pts.map((p, i) => (
-            <circle
-              key={i}
-              cx={p.x}
-              cy={p.y}
-              r={p.ember ? 5 : 3.5}
-              fill={p.ember ? "#C4B5FD" : "rgba(255,181,154,0.6)"}
-            />
-          ))}
-        </svg>
-
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={orbSrc} width={620} height={620} style={{ position: "absolute", right: -150, top: 5 }} alt="" />
         <div
           style={{
             position: "absolute",
-            left: 80,
-            top: 80,
+            inset: 0,
             display: "flex",
-            alignItems: "center",
-            gap: 12,
-            fontSize: 16,
-            letterSpacing: 4,
-            color: "#B3ADC9",
+            background:
+              "linear-gradient(90deg, #13111F 0%, rgba(19,17,31,0.92) 45%, rgba(19,17,31,0.1) 75%, rgba(19,17,31,0) 100%)",
           }}
-        >
-          <div style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: "#C4B5FD" }} />
-          BOSTON, MA · MSBA · OPEN TO WORK
-        </div>
+        />
 
-        <div
-          style={{
-            position: "absolute",
-            left: 80,
-            bottom: 140,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <div style={{ fontSize: 104, fontWeight: 800, color: "#F3F0FA", lineHeight: 0.95, letterSpacing: -4 }}>
-            Mika
+        <div style={{ position: "absolute", left: 80, top: 72, display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              fontFamily: "Plex Mono",
+              fontSize: 17,
+              letterSpacing: 2.7,
+              color: "#FFB59A",
+            }}
+          >
+            <div style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: "#C4B5FD" }} />
+            BOSTON, MA · MSBA, BOSTON UNIVERSITY · OPEN TO WORK
           </div>
-          <div style={{ fontSize: 104, fontWeight: 800, color: "#F3F0FA", lineHeight: 0.95, letterSpacing: -4 }}>
-            Ismayilli
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 40 }}>
+            <div style={line}>I ask why people</div>
+            <div style={line}>do things, then</div>
+            <div style={line}>
+              <span style={{ color: "#C4B5FD" }}>measure</span>
+              <span style={{ marginLeft: 16 }}>it.</span>
+            </div>
           </div>
         </div>
 
-        <div
-          style={{
-            position: "absolute",
-            left: 80,
-            bottom: 80,
-            fontSize: 26,
-            color: "#B3ADC9",
-            maxWidth: 560,
-          }}
-        >
-          Behavioral scientist turned data scientist.
-        </div>
-
-        <div
-          style={{
-            position: "absolute",
-            right: 80,
-            bottom: 80,
-            fontSize: 16,
-            letterSpacing: 4,
-            color: "#8A84A6",
-          }}
-        >
-          n = 90 · r = 0.87 · FIT: OLS
+        <div style={{ position: "absolute", left: 80, bottom: 64, display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ display: "flex", fontSize: 30, letterSpacing: -0.6, color: "#F3F0FA" }}>Mika Ismayilli</div>
+          <div style={{ display: "flex", fontFamily: "Plex Mono", fontSize: 16, letterSpacing: 2.2, color: "#8A84A6" }}>
+            · DATA SCIENTIST
+          </div>
         </div>
       </div>
     ),
-    size
+    {
+      ...size,
+      fonts: [
+        { name: "Bricolage", data: display, style: "normal", weight: 800 },
+        { name: "Plex Mono", data: mono, style: "normal", weight: 500 },
+      ],
+    }
   );
 }
