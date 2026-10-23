@@ -11,25 +11,13 @@ const education = [
     degree: "M.S. in Business Analytics",
     institution: "Boston University, Questrom School of Business",
     period: "Aug 2025 – Jan 2027",
-    notes: ["3.2 GPA", "In progress"],
+    notes: ["In progress"],
   },
   {
     degree: "B.S. in Psychology, Minor in Business Analytics",
     institution: "Suffolk University, Boston, MA",
     period: "Sep 2023 – May 2025",
-    notes: ["3.7 GPA", "Magna Cum Laude", "Dean's List"],
-  },
-  {
-    degree: "Undergraduate coursework, Psychology",
-    institution: "George Mason University, Fairfax, VA",
-    period: "Jan 2021 – May 2023",
-    notes: ["Delta Chi", "Transferred to Suffolk"],
-  },
-  {
-    degree: "High School Diploma",
-    institution: "Baku-Oxford School, Baku, Azerbaijan",
-    period: "Sep 2018 – May 2021",
-    notes: ["3.8 GPA", "High Honors"],
+    notes: ["Magna Cum Laude", "Dean's List"],
   },
 ];
 
@@ -121,7 +109,7 @@ const summary: { key: string; when: string; title: string; org: string; kind: "W
   { key: "daikin", when: "2025", title: "Sales Management Intern", org: "Daikin Azerbaijan · +30% average contract value", kind: "Work" },
   { key: "sbn", when: "2024 – 25", title: "Business Support Coordinator & Intern", org: "Sustainable Business Network of MA · 50+ businesses supported", kind: "Work" },
   { key: "clf", when: "2024", title: "Research Intern", org: "Cambridge Local First", kind: "Work" },
-  { key: "suffolk", when: "2021 – 25", title: "B.S. Psychology, Minor in Business Analytics", org: "Suffolk University · Magna Cum Laude · after George Mason", kind: "School" },
+  { key: "suffolk", when: "2023 – 25", title: "B.S. Psychology, Minor in Business Analytics", org: "Suffolk University · Magna Cum Laude", kind: "School" },
 ];
 
 const skillCount = Object.entries(skills)
