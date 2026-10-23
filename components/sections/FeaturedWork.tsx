@@ -26,8 +26,8 @@ const studies: Study[] = [
     status: { label: "Open source", kind: "team" },
     role: "Solo rebuild · 46 commits",
     oneliner:
-      "An AI job agent anyone can install by talking to Claude. It scores each posting on how many of its real requirements your resume covers, flags jobs you can't legally take, and tailors a one-page resume for the ones worth it.",
-    finding: "Keyword matching → requirement coverage · 123 tests · works for any user",
+      "An AI job agent anyone can install by talking to Claude. It scores each posting on how many of its real requirements your resume covers, flags jobs you can't legally take in the US or Canada, and tailors a one-page resume for the ones worth it.",
+    finding: "Keyword matching → requirement coverage · US + Canada · 224 tests",
     tech: ["Claude Code", "Next.js", "Cloudflare Workers", "D1", "TypeScript"],
     chart: <RequirementCoverage />,
   },
