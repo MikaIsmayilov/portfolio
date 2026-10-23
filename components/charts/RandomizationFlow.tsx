@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
 /**
@@ -67,10 +67,10 @@ export default function RandomizationFlow() {
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.5, delay: 1.1 }}
       >
-        <text x={196} y={36} className="mono" fill="var(--cool)" fontSize="9.5" letterSpacing="0.8">
+        <text x={196} y={36} className="mono" fill="var(--support)" fontSize="9.5" letterSpacing="0.8">
           CONTROL · standard listing
         </text>
-        <text x={196} y={120} className="mono" fill="var(--ember)" fontSize="9.5" letterSpacing="0.8">
+        <text x={196} y={120} className="mono" fill="var(--accent)" fontSize="9.5" letterSpacing="0.8">
           TREATMENT · “Only 3 left!”
         </text>
       </motion.g>
@@ -85,7 +85,7 @@ export default function RandomizationFlow() {
             cy={s.cy}
             r={3}
             fill="none"
-            stroke="rgba(169,174,197,0.22)"
+            stroke="rgba(179,173,201,0.22)"
             strokeWidth="0.75"
           />
         );
@@ -100,10 +100,10 @@ export default function RandomizationFlow() {
           <motion.circle
             key={i}
             r={3}
-            initial={{ cx: s.cx, cy: s.cy, fill: "rgba(169,174,197,0.55)" }}
+            initial={{ cx: s.cx, cy: s.cy, fill: "rgba(179,173,201,0.55)" }}
             animate={
               inView
-                ? { cx: e.cx, cy: e.cy, fill: treated ? "#F5B342" : "#7C93FF" }
+                ? { cx: e.cx, cy: e.cy, fill: treated ? "#C4B5FD" : "#FFB59A" }
                 : {}
             }
             transition={{

@@ -1,6 +1,9 @@
 "use client";
 
+import { useRef, useState } from "react";
+import type { PointerEvent } from "react";
 import Reveal from "@/components/Reveal";
+import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import ExpandableCard from "@/components/ExpandableCard";
 import type { ExpandableProject } from "@/components/ExpandableCard";
 
@@ -138,7 +141,37 @@ const tier2: ExpandableProject[] = [
   },
 ];
 
+// Short category tag shown on each marquee card.
+const tags: Record<string, string> = {
+  "bu-ship-chatbot": "RAG · LLM evaluation",
+  "f1-analysis": "Sports analytics",
+  "airbnb-boston": "Supervised ML",
+  "alone-tv": "Clustering",
+  "semiconductor-trade": "Trade networks",
+  "freight-plus": "Pricing models",
+  "lego-discovery-center": "Growth strategy",
+};
+
 export default function MoreProjects() {
+  const [selected, setSelected] = useState<string | null>(null);
+  const press = useRef({ x: 0, y: 0 });
+  const detailRef = useRef<HTMLDivElement>(null);
+  const project = tier2.find((p) => p.slug === selected);
+
+  const onPointerDown = (e: PointerEvent) => {
+    press.current = { x: e.clientX, y: e.clientY };
+  };
+
+  // The drag library swallows clicks, so pointer-up decides: a pick only if
+  // the pointer barely moved. Keyboard activation (detail 0) always picks.
+  const pick = (slug: string, e: PointerEvent | null) => {
+    if (e && Math.hypot(e.clientX - press.current.x, e.clientY - press.current.y) > 6) return;
+    setSelected(slug);
+    requestAnimationFrame(() =>
+      detailRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
+    );
+  };
+
   return (
     <section id="more-projects" className="section">
       <div className="wrap">
@@ -160,26 +193,68 @@ export default function MoreProjects() {
               </h2>
             </div>
             <p className="prose" style={{ color: "var(--paper-dim)", maxWidth: "380px", fontSize: "1rem" }}>
-              Real work with real results from my MSBA and BS programs. Open any
-              card for the visuals and my part in it.
+              Real work with real results from my MSBA and BS programs. Drag
+              the strip, then pick a card for the visuals and my part in it.
             </p>
           </div>
         </Reveal>
+      </div>
 
-        <div
-          className="tier2-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}
-        >
-          {tier2.map((p, i) => (
-            <ExpandableCard key={p.slug} project={p} index={i} />
-          ))}
-        </div>
+      <div className="marquee-edge" style={{ position: "relative" }}>
+        <DraggableMarquee
+          items={tier2.map((p) => ({ id: p.slug, ...p }))}
+          speed={0.6}
+          gapClassName="gap-5"
+          itemClassName=""
+          pauseOnHover
+          className="py-6"
+          label="Coursework projects. Drag or use the left and right arrow keys."
+          renderItem={(item: ExpandableProject, i: number, isDuplicate: boolean) => (
+            <button
+              type="button"
+              tabIndex={isDuplicate ? -1 : 0}
+              onPointerDown={onPointerDown}
+              onPointerUp={(e) => pick(item.slug, e)}
+              onClick={(e) => e.detail === 0 && pick(item.slug, null)}
+              aria-pressed={selected === item.slug}
+              className="mq-card"
+              style={{ rotate: i % 2 ? "1.5deg" : "-1.5deg", backgroundColor: i % 2 ? "var(--ground-3)" : "var(--ground-2)" }}
+            >
+              <span className="eyebrow" style={{ color: i % 2 ? "var(--support)" : "var(--accent)" }}>
+                {tags[item.slug]}
+              </span>
+              <span className="display mq-title">{item.title}</span>
+              <span className="eyebrow">{item.role}</span>
+            </button>
+          )}
+        />
+      </div>
+
+      <div className="wrap" ref={detailRef} style={{ marginTop: "2rem", scrollMarginTop: "6rem" }}>
+        {project ? (
+          <ExpandableCard key={project.slug} project={project} index={0} defaultOpen />
+        ) : (
+          <p className="eyebrow" style={{ textAlign: "center" }}>
+            ← Drag · click a card for details →
+          </p>
+        )}
       </div>
 
       <style>{`
-        @media (min-width: 760px) {
-          .tier2-grid { grid-template-columns: 1fr 1fr !important; }
+        .marquee-edge::before, .marquee-edge::after {
+          content: ""; position: absolute; top: 0; bottom: 0; width: clamp(2rem, 10vw, 10rem); z-index: 2; pointer-events: none;
         }
+        .marquee-edge::before { left: 0; background: linear-gradient(90deg, var(--ground), transparent); }
+        .marquee-edge::after { right: 0; background: linear-gradient(270deg, var(--ground), transparent); }
+        .mq-card {
+          display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem;
+          width: 340px; height: 210px; padding: 1.5rem; text-align: left; cursor: inherit;
+          border-radius: 18px; border: 1px solid var(--rule-strong); color: var(--paper);
+          transition: border-color 220ms var(--ease-out), background-color 220ms var(--ease-out);
+        }
+        .mq-card:hover, .mq-card[aria-pressed="true"] { border-color: var(--accent); }
+        .mq-title { font-size: 1.4rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+        @media (max-width: 640px) { .mq-card { width: 280px; height: 190px; } }
       `}</style>
     </section>
   );

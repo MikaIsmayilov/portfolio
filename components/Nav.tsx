@@ -28,7 +28,7 @@ export default function Nav() {
         left: 0,
         right: 0,
         zIndex: 100,
-        backgroundColor: scrolled ? "rgba(9, 13, 30, 0.72)" : "transparent",
+        backgroundColor: scrolled ? "rgba(19, 17, 31, 0.72)" : "transparent",
         backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
         borderBottom: `1px solid ${scrolled ? "var(--rule)" : "transparent"}`,
@@ -65,8 +65,8 @@ export default function Nav() {
               width: "8px",
               height: "8px",
               borderRadius: "50%",
-              backgroundColor: "var(--ember)",
-              boxShadow: "0 0 12px var(--ember-dim)",
+              backgroundColor: "var(--accent)",
+              boxShadow: "0 0 12px var(--accent-dim)",
             }}
           />
           Mika Ismayilli

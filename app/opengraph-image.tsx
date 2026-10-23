@@ -28,7 +28,7 @@ export default function OGImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          backgroundColor: "#090D1E",
+          backgroundColor: "#13111F",
           position: "relative",
           fontFamily: "sans-serif",
         }}
@@ -46,7 +46,7 @@ export default function OGImage() {
               cx={p.x}
               cy={p.y}
               r={p.ember ? 5 : 3.5}
-              fill={p.ember ? "#F5B342" : "rgba(124,147,255,0.6)"}
+              fill={p.ember ? "#C4B5FD" : "rgba(255,181,154,0.6)"}
             />
           ))}
         </svg>
@@ -61,10 +61,10 @@ export default function OGImage() {
             gap: 12,
             fontSize: 16,
             letterSpacing: 4,
-            color: "#A9AEC5",
+            color: "#B3ADC9",
           }}
         >
-          <div style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: "#F5B342" }} />
+          <div style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: "#C4B5FD" }} />
           BOSTON, MA · MSBA · OPEN TO WORK
         </div>
 
@@ -77,10 +77,10 @@ export default function OGImage() {
             flexDirection: "column",
           }}
         >
-          <div style={{ fontSize: 104, fontWeight: 800, color: "#F2EDE3", lineHeight: 0.95, letterSpacing: -4 }}>
+          <div style={{ fontSize: 104, fontWeight: 800, color: "#F3F0FA", lineHeight: 0.95, letterSpacing: -4 }}>
             Mika
           </div>
-          <div style={{ fontSize: 104, fontWeight: 800, color: "#F2EDE3", lineHeight: 0.95, letterSpacing: -4 }}>
+          <div style={{ fontSize: 104, fontWeight: 800, color: "#F3F0FA", lineHeight: 0.95, letterSpacing: -4 }}>
             Ismayilli
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function OGImage() {
             left: 80,
             bottom: 80,
             fontSize: 26,
-            color: "#A9AEC5",
+            color: "#B3ADC9",
             maxWidth: 560,
           }}
         >
@@ -105,7 +105,7 @@ export default function OGImage() {
             bottom: 80,
             fontSize: 16,
             letterSpacing: 4,
-            color: "#6B7292",
+            color: "#8A84A6",
           }}
         >
           n = 90 · r = 0.87 · FIT: OLS
