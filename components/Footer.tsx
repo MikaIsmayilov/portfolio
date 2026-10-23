@@ -10,7 +10,9 @@ export default function Footer() {
           justifyContent: "space-between",
           flexWrap: "wrap",
           gap: "1rem",
-          paddingBlock: "2rem",
+          paddingTop: "2rem",
+          // Clears the fixed dock so it never covers the footer text.
+          paddingBottom: "6.5rem",
         }}
       >
         <p className="eyebrow" style={{ letterSpacing: "0.1em" }}>
