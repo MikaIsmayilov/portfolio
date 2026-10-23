@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { DiscoverButton } from "@/components/ui/discover-button";
 
@@ -11,7 +12,19 @@ const LiquidMetal = dynamic(() => import("@/components/ui/liquid-metal"), {
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+// Some browsers have WebGL off (no GPU acceleration, blocklisted drivers).
+// The shader then draws nothing, so fall back to a CSS gradient orb.
+function useWebGL() {
+  const [supported, setSupported] = useState<boolean | null>(null);
+  useEffect(() => {
+    const canvas = document.createElement("canvas");
+    setSupported(!!(canvas.getContext("webgl2") || canvas.getContext("webgl")));
+  }, []);
+  return supported;
+}
+
 export default function Hero() {
+  const webgl = useWebGL();
   return (
     <section
       id="hero"
@@ -38,17 +51,20 @@ export default function Hero() {
             WebkitMaskImage: "radial-gradient(circle, #000 55%, transparent 71%)",
           }}
         >
-          <LiquidMetal
-            shape="circle"
-            colorBack="#1B1830"
-            colorTint="#C4B5FD"
-            speed={0.3}
-            repetition={2}
-            distortion={0.08}
-            shift={0}
-            softness={0.6}
-            contour={0}
-          />
+          {webgl && (
+            <LiquidMetal
+              shape="circle"
+              colorBack="#1B1830"
+              colorTint="#C4B5FD"
+              speed={0.3}
+              repetition={2}
+              distortion={0.08}
+              shift={0}
+              softness={0.6}
+              contour={0}
+            />
+          )}
+          {webgl === false && <div className="hero-orb-fallback" />}
         </motion.div>
       </div>
 
@@ -153,6 +169,18 @@ export default function Hero() {
       <style>{`
         .hero-orb { width: 110vw; height: 110vw; right: -55vw; top: -5vw; opacity: 0.35; }
         .hero-flip { color: var(--accent); }
+        .hero-orb-fallback {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          background:
+            radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.55), transparent 35%),
+            radial-gradient(circle at 70% 75%, rgba(19, 17, 31, 0.85), transparent 55%),
+            conic-gradient(from 200deg, #2A2350, #C4B5FD, #F4F0FF, #6B5BB8, #FFB59A 58%, #FFF1EA, #8B7BD8, #1D1838, #2A2350);
+          filter: blur(2px);
+          animation: hero-orb-spin 40s linear infinite;
+        }
+        @keyframes hero-orb-spin { to { rotate: 360deg; } }
         .hero-break { display: none; }
         @media (min-width: 900px) {
           .hero-orb { width: min(46vw, 680px); height: min(46vw, 680px); right: -4vw; top: 50%; translate: 0 -50%; opacity: 0.8; }

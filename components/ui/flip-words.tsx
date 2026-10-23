@@ -1,7 +1,9 @@
 "use client";
 
 // Adapted from Aceternity UI's flip-words. Colors inherit from the parent,
-// the timer is cleaned up, and reduced-motion users get a static first word.
+// the timer is cleaned up, reduced-motion users get a static first word, and
+// the old word fades out before the next arrives (upstream's 2x blurred exit
+// overlapped the incoming word).
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -32,19 +34,12 @@ export const FlipWords = ({
   }, [isAnimating, duration, startAnimation, reduceMotion]);
 
   return (
-    <AnimatePresence onExitComplete={() => setIsAnimating(false)}>
+    <AnimatePresence mode="wait" onExitComplete={() => setIsAnimating(false)}>
       <motion.span
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 10 }}
-        exit={{
-          opacity: 0,
-          y: -40,
-          x: 40,
-          filter: "blur(8px)",
-          scale: 2,
-          position: "absolute",
-        }}
+        exit={{ opacity: 0, y: -12, filter: "blur(4px)", transition: { duration: 0.22 } }}
         className={cn("relative z-10 inline-block text-left", className)}
         key={currentWord}
       >
